@@ -17,5 +17,12 @@ class Product:
     def get_product_type():
         return self.product_type
 
-    
+    def get_product_colour():
+        return self.product_colour
+
+    def get_pixel_pos():
+        return self.pixel_pos
+
+    def get_product_pos():
+        return self.product_pos
     
