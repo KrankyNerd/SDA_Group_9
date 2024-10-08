@@ -25,4 +25,8 @@ class Product:
 
     def get_product_pos():
         return self.product_pos
+
+    def convert_to_product_pos(self.pixel_pos) #FIXME:
+        placeholder = 0
+        return placeholder  #TODO:
     
