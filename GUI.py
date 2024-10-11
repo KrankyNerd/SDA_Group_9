@@ -1,4 +1,7 @@
-
+"""
+Class GUI:
+This class controls a Graphic User Interface.
+"""
 
 class GUI:
     def __init__(self, resolution, duration, product_list, product_selection):
@@ -7,22 +10,45 @@ class GUI:
         self.product_list = product_list
         self.product_selection = product_selection
 
-    def start_timer():
-        return None
+    def start_timer(self, duration):
+        """
+        Start a timer in miliseconds.
 
-    def time_elapsed():
-        placeholder = 0
-        return placeholder #TODO:
+        :param duration float: duration of timer.
+        :return: true if time has elapsed, false otherwise. 
+        """
+        pass
 
-    def toggle_product_selection(product_selection):
+    def toggle_product_selection(self, product_selection):
+        """
+        Toggle the state of end-effector responsible for selecting a product.
+
+        :return: None.
+        """
         return None
     
-    def display_error():
-        return ("Message") #TODO:
+    def display_error(self):
+        """
+        Print a especific error message to terminal.
+        
+        :return: string. 
+        """
+    
+        return ("Message")
 
-    def instantiate_product():
-        return None
+    def instantiate_product(self, product_dict):
+        """
+        Instantiate a product and append it to the product list. 
 
-    def display_products():
+        :param product_dict: dictonary containing product data.
+        :return: None. 
+        """
+    
+        return None #TODO: add all parameters
+
+    def display_products(self):
+        """
+        Display all products in product_list on screen.
+        """
         return None
         
