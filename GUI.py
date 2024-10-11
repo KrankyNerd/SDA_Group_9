@@ -1,4 +1,8 @@
+"""
+Class GUI:
 
+this class blablabla
+"""
 
 class GUI:
     def __init__(self, resolution, duration, product_list, product_selection):
@@ -7,7 +11,12 @@ class GUI:
         self.product_list = product_list
         self.product_selection = product_selection
 
-    def start_timer():
+    def start_timer(self.duration):
+        """
+        This method starts a timer.
+
+        :parameter:  float.
+        """
         return None
 
     def time_elapsed():
