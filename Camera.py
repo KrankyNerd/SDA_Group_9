@@ -44,6 +44,7 @@ class Camera:
         cv2.imshow("Thresholding", threshold)
 
         contours, _ = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        detected_shapes = []  # List to hold detected shape information
 
         for contour in contours:
             if cv2.contourArea(contour) < self.MIN_CONTOUR_AREA:
@@ -63,16 +64,27 @@ class Camera:
                 cv2.putText(frame, shape_name, (x + 2, y - 25), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (int(b), int(g), int(r)), 2)
                 # Add pixel coordinates to the image
                 cv2.putText(frame, f'({x}, {y})', (x + 2, y + 5),  # Position the coordinates just below the shape
-                        cv2.FONT_HERSHEY_SIMPLEX, 0.5, (int(b), int(g), int(r)), 2)
+                            cv2.FONT_HERSHEY_SIMPLEX, 0.5, (int(b), int(g), int(r)), 2)
 
-        return frame
+                # Append detected shape information to the list
+                detected_shapes.append({
+                    'shape': shape_name,
+                    'color': (b, g, r),
+                    'coordinates': (x, y)
+                })
+
+        return frame, detected_shapes  # Return both the processed image and detected shapes
 
     def run(self):
         while True:
             captured_image = self.get_image()
             if captured_image is not None:
-                processed_image = self.process_image(captured_image)
+                processed_image, detected_shapes = self.process_image(captured_image)
                 cv2.imshow("Processed Image", processed_image)
+
+                # Print detected shapes to the console
+                for shape_info in detected_shapes:
+                    print(f"Detected {shape_info['shape']} at {shape_info['coordinates']} with color {shape_info['color']}")
 
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
