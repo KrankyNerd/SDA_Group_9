@@ -93,6 +93,7 @@ class Camera:
         self.capture.release()
         cv2.destroyAllWindows()
 
+#TODO: make sure to delete this stuff was just for testing
 # Create an instance of the Camera class and run it
 if __name__ == "__main__":
     camera = Camera(address=2)
