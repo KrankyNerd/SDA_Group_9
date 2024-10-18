@@ -1,4 +1,4 @@
-
+#test
 
 class Camera:
     def __init__(self, resolution, channels, address, white_balance, camera_error, image_path, product_detected, product_list,product_dict, product_colour):

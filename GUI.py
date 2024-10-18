@@ -1,6 +1,8 @@
 """
 Class GUI:
+add_doc_strings_to_classes
 This class controls a Graphic User Interface.
+
 """
 
 class GUI:
@@ -13,7 +15,11 @@ class GUI:
     def start_timer(self, duration):
         """
         Start a timer in miliseconds.
-
+        
+        :parameter:  float.
+        """
+        return None
+      
         :param duration float: duration of timer.
         :return: true if time has elapsed, false otherwise. 
         """
