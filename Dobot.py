@@ -1,6 +1,6 @@
 """
 Class Dobot:
-Pick and place items with a Dobot.
+Higher-level class to pick and place items with a Dobot.
 """
 
 import DoBotArm
@@ -8,25 +8,16 @@ import DoBotArm
 class Dobot(DoBotArm):
     def __init__(self, port, homeX, homeY, homeZ, home = False, homingWait = True):
          
-         super().__init__(self, port, homeX, homeY, homeZ, home = False, homingWait = True)
+         super().__init__(port, homeX, homeY, homeZ, home = False, homingWait = True)
 
-    self.current_pos = current_pos
-    self.current_x = current_x
-    self.current_y = current_y
-    self.current_z = current_z
-    self.desired_pos = desired_pos
-    self.desired_x = desired_x
-    self.desired_y = desired_y
-    self.desired_z = desired_z
-    self.home_pos = home_pos
-    self.error = error
-    self.moving_x = moving_x
-    self.moving_y = moving_y
-    self.moving_z = moving_z
-    self.end_pos = end_pos
-    self.dobot_serial_timeout = dobot_serial_timeout
+        self.current_pos = ()
+        self.desired_pos = ()
+        self.end_pos = ()
+        self.home_pos = (homeX, homeY, homeZ)
+        self.moving_z = 21.5 #not correct: should be height of product + height of conveyor + a bit more
+        self.dobot_serial_timeout = False #error variable
 
-    def go_to_pos():# no Z movement
+    def go_to_pos(self):# no Z movement
 
        # x = circle1.pixel_pos.x * ratio
        # y = circle1.pixel_pos.y * ratio
@@ -35,21 +26,20 @@ class Dobot(DoBotArm):
 
         return None
 
-    def get_current_pos():
+    def get_current_pos(self):
         pass
     
-    def get_desired_pos():
-        placeholder = 0
-        return placeholder #TODO:
+    def get_desired_pos(self):
+        pass
 
-    def pick():# platform + object z
+    def pick(self):# platform + object z
         #toggle end effector
         return None
 
-    def place():#conveyor z
+    def place(self):#conveyor z
         return None
 
-    def get_ratio(): #to call once in init
+    def get_ratio(self): #to call once in init
         # Move arm to camera view
         # while arm not detected
         # move arm x or y by a bit, get-pos
@@ -57,6 +47,6 @@ class Dobot(DoBotArm):
         # move arm x,y by n-amount, get-pos
         # get pixel pos
         # ratio = pixel_pos-pixelpos0/ get_pos - get_pos0
-
+        ratio = float  
 
         return ratio
