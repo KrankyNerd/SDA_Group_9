@@ -16,14 +16,11 @@ class GUI:
         """
         Start a timer in miliseconds.
         
-        :parameter:  float.
-        """
-        return None
-      
         :param duration float: duration of timer.
         :return: true if time has elapsed, false otherwise. 
         """
-        pass
+        return None
+      
 
     def toggle_product_selection(self, product_selection):
         """
