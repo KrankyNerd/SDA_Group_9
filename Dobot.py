@@ -50,6 +50,5 @@ class Dobot:
         # get pixel pos
         # ratio = pixel_pos-pixelpos0/ get_pos - get_pos0
 
-        return ratio
 
-    def convert_to_
+        return ratio
