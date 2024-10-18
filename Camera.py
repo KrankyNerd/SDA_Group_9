@@ -1,6 +1,12 @@
 import cv2
 import numpy as np
 
+"""
+Class Camera:
+
+Control a camera object, get images and detect shapes in an image.
+"""
+
 class Camera:
     THRESHOLD_VALUE = 102
     MAX_THRESHOLD_VALUE = 150
@@ -67,6 +73,7 @@ class Camera:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (int(b), int(g), int(r)), 2)
 
                 # Append detected shape information to the list
+                # why? shouldn't this happen in GUI? -isa
                 detected_shapes.append({
                     'shape': shape_name,
                     'color': (b, g, r),
