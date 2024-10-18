@@ -1,4 +1,7 @@
-
+"""
+Class Dobot:
+Pick and place items with a Dobot.
+"""
 
 class Dobot:
     def __init__(self, current_pos, current_x, current_y, current_z, desired_pos, desired_x, desired_y, desired_z, home_pos, error, moving_x, moving_y, moving_z, end_pos, dobot_serial_timeout):
