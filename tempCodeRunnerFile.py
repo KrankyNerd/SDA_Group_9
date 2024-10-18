@@ -1,0 +1,1 @@
+cv2.approxPolyDP(contour, 0.1 * cv2.arcLength(contour, True), True)
