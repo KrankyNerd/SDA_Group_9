@@ -1,4 +1,4 @@
-
+#
 
 class GUI:
     def __init__(self, resolution, duration, product_list, product_selection):

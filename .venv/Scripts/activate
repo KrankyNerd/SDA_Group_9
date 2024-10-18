@@ -35,7 +35,7 @@ deactivate () {
 # unset irrelevant variables
 deactivate nondestructive
 
-VIRTUAL_ENV="c:\HBO\S3\SDA\Groupwork\EndAssCode\.venv"
+VIRTUAL_ENV="c:\Users\pc\OneDrive - Office 365 Fontys\COURSEWORK 20242025\SDA3\SDA_Group_9\.venv"
 export VIRTUAL_ENV
 
 _OLD_VIRTUAL_PATH="$PATH"

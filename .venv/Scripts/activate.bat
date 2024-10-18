@@ -8,7 +8,7 @@ if defined _OLD_CODEPAGE (
     "%SystemRoot%\System32\chcp.com" 65001 > nul
 )
 
-set VIRTUAL_ENV=c:\HBO\S3\SDA\Groupwork\EndAssCode\.venv
+set VIRTUAL_ENV=c:\Users\pc\OneDrive - Office 365 Fontys\COURSEWORK 20242025\SDA3\SDA_Group_9\.venv
 
 if not defined PROMPT set PROMPT=$P$G
 
