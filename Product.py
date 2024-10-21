@@ -11,22 +11,21 @@ class Product:
         self.pixel_pos = pixel_pos
         self.product_pos = product_pos
 
-    def get_product_ID():
+    def get_product_ID(self):
         return self.ID
 
-    def get_product_type():
+    def get_product_type(self):
         return self.product_type
 
-    def get_product_colour():
+    def get_product_colour(self):
         return self.product_colour
 
-    def get_pixel_pos():
+    def get_pixel_pos(self):
         return self.pixel_pos
 
-    def get_product_pos():
+    def get_product_pos(self):
         return self.product_pos
 
-    def convert_to_product_pos(self.pixel_pos) #FIXME:
+    def convert_to_product_pos(pixel_pos): #FIXME:
         placeholder = 0
         return placeholder  #TODO:
-    
