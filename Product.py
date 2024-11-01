@@ -17,11 +17,21 @@ class Product:
     def get_product_ID(self):
         return self.__ID
 
+    def get_product_ID(self):
+        return self.ID
+
     def get_product_type(self):
-        return self.__product_type
+        return self.product_type
 
     def get_product_colour(self):
-        return self.__product_colour
+        return self.product_colour
 
     def get_pixel_pos(self):
-        return self.__pixel_pos
+        return self.pixel_pos
+
+    def get_product_pos(self):
+        return self.product_pos
+
+    def convert_to_product_pos(pixel_pos): #FIXME:
+        placeholder = 0
+        return placeholder  

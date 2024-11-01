@@ -26,6 +26,7 @@ class Camera:
             raise Exception("Error: Could not open camera.")
 
     def get_image(self):
+        """the camera captures the image and returns the frame"""
         ret, frame = self.capture.read()
         if not ret:
             print("Could not capture frame")
@@ -46,13 +47,17 @@ class Camera:
             return 'Circle'
 
     def process_image(self, frame):
+      
+        #converts captured image to grayscale
         grayimg = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         cv2.imshow("Gray Image", grayimg)
 
         _, threshold = cv2.threshold(grayimg, self.THRESHOLD_VALUE, self.MAX_THRESHOLD_VALUE, cv2.THRESH_BINARY)
         cv2.imshow("Thresholding", threshold)
 
+        #find the contours in the image
         contours, _ = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
+        
         detected_shapes = []  # List to hold detected shape information
 
         for contour in contours:
@@ -61,7 +66,7 @@ class Camera:
 
             approx = cv2.approxPolyDP(contour, 0.1 * cv2.arcLength(contour, True), True)
             cv2.drawContours(frame, [contour], 0, (0, 0, 255), 2)
-            M = cv2.moments(contour)
+            M = cv2.moments(contour)# Get the pixel position (center) of the contour
 
             if M['m00'] != 0.0:  # Avoid division by zero
                 x = int(M['m10'] / M['m00'])
