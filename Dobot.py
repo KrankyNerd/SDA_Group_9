@@ -1,3 +1,6 @@
+# importing numpy module
+import numpy as np
+
 """
 Class Dobot:
 Higher-level class to pick and place items with a Dobot.
@@ -11,7 +14,6 @@ class Dobot(DoBotArm):
 
         super().__init__(port, homeX, homeY, homeZ, home=False, homingWait=True)
 
-        self.desired_pos = ()
         self.end_pos = ()
         self.home_pos = (self.homeX, self.homeY, self.homeZ)
         self.moving_z = 70.0 #height of product + height of conveyor 
@@ -19,17 +21,20 @@ class Dobot(DoBotArm):
 
         self.moveHome  # move to home position at end of init
 
-    def go_to_pos(self):  # no Z movement
+    def go_to_pos(self, x, y):  # no Z movement
         """
         Go to a (x, y) position. No movement in Z axis.
 
+        :param:
+        x: pixel position x coordinate
+        y: pixel position y coordinate
         :return: None
         """
 
-        # x = circle1.pixel_pos.x * ratio
-        # y = circle1.pixel_pos.y * ratio
 
-       # self.moveArmXYZ(x, y, self.moving_z)
+        np.array(list)
+
+        self.moveArmXYZ(x, y, self.moving_z)
 
         return None
 
@@ -38,10 +43,8 @@ class Dobot(DoBotArm):
         x, y, z, *_ = self.getPosition()  # Ignore the rest of the values using "*_"
         return (x, y, z)  # Return the position as a tuple
 
-    def get_desired_pos(self):
-        pass
-
     def pick(self):  # platform + object z
+
         # toggle end effector
         return None
 
