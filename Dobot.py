@@ -29,7 +29,7 @@ class Dobot(DoBotArm):
         # x = circle1.pixel_pos.x * ratio
         # y = circle1.pixel_pos.y * ratio
 
-        self.moveArmXYZ(x, y, self.moving_z)
+       # self.moveArmXYZ(x, y, self.moving_z)
 
         return None
 
