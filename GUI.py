@@ -53,14 +53,12 @@ class GUI:
         :param product_dict: dictonary containing product data.
         :return: None. 
         """
+        detected_shapesdata =Camera.process_image()
         product_list=[]
-        product = Product(product.ID, product.product_type, product.product_colour, product.pixel_pos, product.product_pos)
-        product_list.append(product)
-        product_dict ={product.ID:{ 
-                       'product_type':product.product_type,
-                        'product_colour' :product.product_colour,
-                         'pixel_pos': product.pixel_pos,
-                          'product_pos': product.product_pos} for product in product_list}
+        for product_dict in  detected_shapesdata :
+            product = Product(**product_dict)
+            product_list.append(product)
+        
 
         return None #TODO: add all parameters
 
@@ -68,6 +66,8 @@ class GUI:
         """
         Display all products in product_list on screen.
         """
+        #for product in product_list
+        #display products
         frame =camera.get_image()
         cv2.imshow("Product Detection", frame)
 
