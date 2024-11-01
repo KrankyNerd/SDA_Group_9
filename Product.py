@@ -1,4 +1,8 @@
+"""
+Class Product:
 
+Class for products. 
+"""
 
 
 class Product:
@@ -31,4 +35,4 @@ class Product:
 
     def convert_to_product_pos(pixel_pos): #FIXME:
         placeholder = 0
-        return placeholder  #TODO:
+        return placeholder  

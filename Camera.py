@@ -2,7 +2,7 @@ import cv2
 import numpy as np
 
 """
-Class Camera:
+Class Camera: TEST DOES IT NOT LET ME COMMMIT AHHH
 
 Control a camera object, get images and detect shapes in an image.
 """
@@ -19,8 +19,10 @@ class Camera:
         self.address = address
         self.white_balance = white_balance
         self.capture = cv2.VideoCapture(self.address, cv2.CAP_DSHOW)
+        self.camera_error = False
 
         if not self.capture.isOpened():
+            self.camera_error = True
             raise Exception("Error: Could not open camera.")
 
     def get_image(self):
@@ -31,6 +33,7 @@ class Camera:
             return None
         return frame[self.CROP_Y_START:self.CROP_Y_END, self.CROP_X_START:self.CROP_X_END]  
 
+#TODO: add shape_detected bool
     def detect_shape(self, approx):
         if len(approx) == 3:
             return 'Triangle'
