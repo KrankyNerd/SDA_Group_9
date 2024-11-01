@@ -82,7 +82,7 @@ class Camera:
                 detected_shapesdata.append({
                     'product_type': shape_name,
                     'product_color': (b, g, r),
-                    'product_posx': x
+                    'product_posx': x,
                     'product_posy': y
                 
                 })
