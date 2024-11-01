@@ -14,7 +14,7 @@ class Dobot(DoBotArm):
         self.desired_pos = ()
         self.end_pos = ()
         self.home_pos = (self.homeX, self.homeY, self.homeZ)
-        self.moving_z = 21.5  # not correct value: should be height of product + height of conveyor + a bit more
+        self.moving_z = 70.0 #height of product + height of conveyor 
         self.dobot_serial_timeout = False  # error variable
 
         self.moveHome  # move to home position at end of init
