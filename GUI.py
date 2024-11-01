@@ -68,7 +68,7 @@ class GUI:
         """
         #for product in product_list
         #display products
-        frame =camera.get_image()
+        frame =Camera.get_image()
         cv2.imshow("Product Detection", frame)
 
         return None
