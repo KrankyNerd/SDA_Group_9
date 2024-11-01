@@ -37,6 +37,11 @@ class GUI:
         :return: string. 
         """
     
+        if dobot.dobot_serial_timeout
+            return ("ERROR: no Dobot communication.")
+
+        # add if statements for all possible errors
+
         return ("Message")
 
     def instantiate_product(self, product_dict):
