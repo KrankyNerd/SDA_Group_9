@@ -25,13 +25,16 @@ class Dobot(DoBotArm):
     def go_to_pos(self, x, y):  # no Z movement
         """
         Go to a (x, y) position. No movement in Z axis.
+        Takes coordinates in pixel system and converts it to dobot coordinates.
 
         :param:
-        x: pixel position x coordinate
-        y: pixel position y coordinate
+        x pixel position x coordinate
+        y pixel position y coordinate
+        
         :return: None
         """
 
+        #self.calibration_points 
 
         np.array(list)
 
