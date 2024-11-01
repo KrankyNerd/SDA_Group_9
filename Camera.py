@@ -55,7 +55,7 @@ class Camera:
         #find the contours in the image
         contours, _ = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         
-        detected_shapes = []  # List to hold detected shape information
+        detected_shapesdata = []  # List to hold detected shape information
 
         for contour in contours:
             if cv2.contourArea(contour) < self.MIN_CONTOUR_AREA:
@@ -79,13 +79,15 @@ class Camera:
 
                 # Append detected shape information to the list
                 # why? shouldn't this happen in GUI? -isa
-                detected_shapes.append({
-                    'shape': shape_name,
-                    'color': (b, g, r),
-                    'coordinates': (x, y)
+                detected_shapesdata.append({
+                    'product_type': shape_name,
+                    'product_color': (b, g, r),
+                    'product_posx': x
+                    'product_posy': y
+                
                 })
 
-        return frame, detected_shapes  # Return both the processed image and detected shapes
+        return frame, detected_shapesdata  # Return both the processed image and detected shapes
 
     def run(self):
         while True:
