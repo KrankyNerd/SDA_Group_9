@@ -1,5 +1,6 @@
 # importing numpy module
 import numpy as np
+import random
 
 """
 Class Dobot:
@@ -51,14 +52,30 @@ class Dobot(DoBotArm):
     def place(self):  # conveyor z
         return None
 
-    def get_ratio(self):  # to call once in init
-        # Move arm to camera view
-        # while arm not detected
-        # move arm x or y by a bit, get-pos
-        # once detected get pixel_pos
-        # move arm x,y by n-amount, get-pos
-        # get pixel pos
-        # ratio = pixel_pos-pixelpos0/ get_pos - get_pos0
-        ratio = float
+    def manual_calibrate(self): #call once in init
+        """
+        Prompts the user to manually calibrate the dobot by recording 
+        calibration points from both the camera and the robot.
+        """
 
-        return ratio
+        try:
+            num_points = int(input("How many points do you want to record?\n>>> "))
+            
+            for i in range(num_points):
+                input("Place the robot arm somewhere in the FOV and press enter\n>>> ")
+                
+                camera.run()
+
+                # Simulating camera and robot points
+                camera_point = camera.detected_shapes[0]['coordinates']
+                robot_point = self.get_current_pos()
+                
+                # Store the calibration point pair
+                self.calibration_points.append((camera_point, robot_point))
+                
+                print(f"Point recorded - camera: {camera_point} robot: {robot_point}")
+            
+            print("\nPoints recorded, thank you!")
+        
+        except ValueError:
+            print("Invalid input. Please enter a valid number.")
