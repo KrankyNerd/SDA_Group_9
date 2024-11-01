@@ -35,10 +35,13 @@ class Dobot:
         return placeholder #TODO:
 
     def pick():# platform + object z
-        #toggle end effector
+        ctrlDobot.toggleSuction()
+        # Dobot.moveArm(z,y,(home(50) to top of object(21.5)))
         return None
 
     def place():#conveyor z
+        # Dobot.moveArm(z,y,(Conveyor Height(45.5)+object Height(21.5)))
+        ctrlDobot.toggleSuction()
         return None
 
     def get_ratio(): #to call once in init
