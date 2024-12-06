@@ -42,9 +42,8 @@ class Dobot:
         return None
 
     def get_ratio(): #to call once in init
-        # Move arm to camera view
-        # while arm not detected
-        # move arm x or y by a bit, get-pos
+        # ctrlDobot.moveHome()
+        # get-posX and Y of white cube
         # once detected get pixel_pos
         # move arm x,y by n-amount, get-pos
         # get pixel pos
