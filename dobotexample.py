@@ -12,7 +12,8 @@ homeX, homeY, homeZ = 170, 0, 0
 
 #3 Create objects of the needed classes
 
-ctrlDobot = dbt.DoBotArm("COM3", homeX, homeY, homeZ, home= False)
+ctrlDobot = dbt.DoBotArm("COM3", homeX, homeY, homeZ, home= False) # "dev/ttyUSB0" for linux (or USB1) 
+#linux: run 'ls /dev/ | grep USB' in terminal with dobot connected to see which port
 
  #Dobot starts at home
 print("starting")
