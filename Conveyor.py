@@ -7,7 +7,7 @@ class Conveyor:
         self.velocity = velocity
         
     
-    def move_conveyor(enabled,velocity):
-        cmd =
+    def move_conveyor(self,enabled,velocity):
+        dType.SetEMotor(self.api, 0, enabled, velocity)
         return None
         

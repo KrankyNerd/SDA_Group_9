@@ -104,18 +104,6 @@ class DoBotArm:
             dType.dSleep(200)
         dType.SetQueuedCmdStopExec(self.api)#stops executing the commands in the queue
 
-    #Toggles suction peripheral on/off
-    def toggleSuction(self, wait = True):
-        lastIndex = 0
-        if(self.suction):
-            self.lastIndex = dType.SetEndEffectorSuctionCup( self.api, True, False, isQueued = 0)[0]
-            self.suction = False
-        else:
-            self.lastIndex = dType.SetEndEffectorSuctionCup(self.api, True, True, isQueued = 0)[0]
-            self.suction = True
-        if(wait):
-            self.commandDelay(self.lastIndex)
-        return self.lastIndex
 
     def getPosition(self):
         return dType.GetPose(self.api)
@@ -154,9 +142,7 @@ class DoBotArm:
             self.commandDelay(self.lastIndex)
         return self.lastIndex
 
-    def SetConveyor(self, enabled, speed = 15000):
-        self.lastIndex = dType.SetEMotor(self.api, 0, enabled, speed, isQueued = 1)[0]
-        self.commandDelay(self.lastIndex)
+    
         
     def RotateHead(self, rotation, wait = True):
         self.rotation = rotation
@@ -182,3 +168,6 @@ class DoBotArm:
         #if(wait):
         #    self.commandDelay(self.lastIndex)
         return self.lastIndex
+#def SetConveyor(self, enabled, speed = 15000):
+        self.lastIndex = dType.SetEMotor(self.api, 0, enabled, speed, isQueued = 1)[0]
+        self.commandDelay(self.lastIndex)

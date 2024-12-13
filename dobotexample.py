@@ -43,6 +43,7 @@ time.sleep(5)
 ctrlDobot.moveArmRelXYZ(0,0,40)
 time.sleep(5)
 ctrlDobot.toggleSuction()
+
 ctrlDobot.SetConveyor(True, 15000)#start conveyor
 time.sleep(5)#delay
 ctrlDobot.SetConveyor(True, 0)#stops conveyor

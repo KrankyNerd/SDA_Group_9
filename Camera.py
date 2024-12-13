@@ -84,10 +84,9 @@ class Camera:
                 # why? shouldn't this happen in GUI? -isa
                 detected_shapesdata.append({
                     'product_type': shape_name,
-                    'product_color': (b, g, r),
-                    'product_posx': x,
-                    'product_posy': y
-                
+                    'product_colour': (b, g, r),
+                    'pixel_posx': x,
+                    'pixel_posy': y      
                 })
 
         return frame, detected_shapesdata  # Return both the processed image and detected shapes
@@ -96,13 +95,13 @@ class Camera:
         while True:
             captured_image = self.get_image()
             if captured_image is not None:
-                processed_image, detected_shapes = self.process_image(captured_image)
+                processed_image, detected_shapesdata = self.process_image(captured_image)
                 cv2.imshow("Processed Image", processed_image)
 
                 # Print detected shapes to the console
-                for shape_info in detected_shapes:
-                    print(f"Detected {shape_info['shape']} at {shape_info['coordinates']} with color {shape_info['color']}")
-
+                ##for shape_info in detected_shapesdata:
+                    #print(f"Detected {shape_info['product_type']} at {shape_info['product_posx']},{shape_info['product_posy']} with color {shape_info['product_color']}")
+                   
             if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
 
@@ -112,7 +111,6 @@ class Camera:
 
 #TODO: make sure to delete this stuff was just for testing
 # Create an instance of the Camera class and run it
-if __name__ == "__main__":
-    camera = Camera(address=2)
-    camera.run()
-    camera.release()
+#if __name__ == "__main__":
+    
+    
