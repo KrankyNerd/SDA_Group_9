@@ -13,8 +13,10 @@ ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home= False)
 #ctrlDobot.moveArmXYZ(x= 170, y= -100, z= 40)
 ctrlDobot.moveHome()
 print("movement finshed")
-time.sleep(5)
-ctrlDobot.moveArmXYZ(170, -100 , 40)
+time.sleep(1)
+ctrlDobot.moveArmXYZ(170, -220, 30)
+ctrlDobot.moveArmXYZ(20, -220, 30) #correct coordinates for conveyor
+
 print("YEs")
 ctrlDobot.DisconnectDobot()
 # def SetConveyor(self, enabled, speed = 15000):
