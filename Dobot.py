@@ -23,7 +23,7 @@ class Dobot:
        # x = circle1.pixel_pos.x * ratio
        # y = circle1.pixel_pos.y * ratio
     
-       # Dobot.movearm(z, y, z)
+       # Dobot.movearm(x, y, z)
 
         return None
 
@@ -35,10 +35,13 @@ class Dobot:
         return placeholder #TODO:
 
     def pick():# platform + object z
-        #toggle end effector
+        ctrlDobot.toggleSuction()
+        # Dobot.moveArm(x,y,(home(50) to top of object(21.5)))
         return None
 
     def place():#conveyor z
+        # Dobot.moveArm(x,y,(Conveyor Height(45.5)+object Height(21.5)))
+        ctrlDobot.toggleSuction()
         return None
 
     def get_ratio(): #to call once in init
@@ -50,7 +53,6 @@ class Dobot:
         # get pixel pos
         # ratio = pixel_pos-pixelpos0/ get_pos - get_pos0
 
-        return ratio
 
     def get_product_position(camera.detected_shapes):
     """
@@ -67,3 +69,4 @@ class Dobot:
         first_shape = detected_shapes[0]
         return first_shape['product_posx'], first_shape['product_posy']
     return None
+        return ratio

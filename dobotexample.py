@@ -1,3 +1,5 @@
+"""main function, that controls the loading cycle"""
+#1import libraries and classes
 import threading
 import DoBotArm as dbt
 import time

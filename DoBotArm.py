@@ -28,10 +28,11 @@ CON_STR = {
 
 #Main control class for the DoBot Magician.
 class DoBotArm:
+    #to create an instance
     def __init__(self, port, homeX, homeY, homeZ, home = False, homingWait = True):
         self.suction = False
         self.picking = False
-        self.api = dType.load()
+        self.api = dType.load()# object containing library to be accessed
         self.port = port
         self.homeX = homeX
         self.homeY = homeY
@@ -43,6 +44,7 @@ class DoBotArm:
         self.lastIndex = 0
         self.rotation = self.getPosition()[3]
 
+#to delete an instance
     def __del__(self):
         self.dobotDisconnect()
 
@@ -50,8 +52,8 @@ class DoBotArm:
     def dobotConnect(self, home = True, homingWait = True):
         if(self.connected):
             print("You're already connected")
-        else:
-            state = dType.ConnectDobot(self.api, self.port, 115200)[0]
+        else: 
+            state = dType.ConnectDobot(self.api, self.port, 115200)[0]#connect dobort to precised port at specified baudrate
             if(state == dType.DobotConnect.DobotConnect_NoError):
                 print("Connect status:",CON_STR[state])
                 # If homingWait is set to false, wait_rehoming needs to be called before executing Dobot commands
@@ -74,11 +76,11 @@ class DoBotArm:
             self.homeZ = z
         dType.SetQueuedCmdClear(self.api)
 
-        dType.SetHOMEParams(self.api, self.homeX, self.homeY, self.homeZ, 0, isQueued = 1)
+        dType.SetHOMEParams(self.api, self.homeX, self.homeY, self.homeZ, 0, isQueued = 1)#sets home x,y position and z height
         dType.SetPTPJointParams(self.api, 200, 200, 200, 200, 200, 200, 200, 200, isQueued = 1)
-        dType.SetPTPCommonParams(self.api, 100, 100, isQueued = 1)
+        dType.SetPTPCommonParams(self.api, 100, 100, isQueued = 1) #sets velocity=100 and acceleration=100 of dobot joints
 
-        self.lastIndex = dType.SetHOMECmd(self.api, temp = 0, isQueued = 1)
+        self.lastIndex = dType.SetHOMECmd(self.api, temp = 0, isQueued = 1)#go to home
         self.home_time = time.time()
         if(wait):
             time.sleep(25)
@@ -93,47 +95,40 @@ class DoBotArm:
         self.moveHome()
         dType.DisconnectDobot(self.api)
 
-    #Delays commands
+    #Delays commands: Soeach command executes 200ms after another
     def commandDelay(self, lastIndex = None):
         if(lastIndex == None):
             lastIndex = self.lastIndex
-        dType.SetQueuedCmdStartExec(self.api)
+        dType.SetQueuedCmdStartExec(self.api)#starts executing the commands in the queue
         while lastIndex > dType.GetQueuedCmdCurrentIndex(self.api)[0]:
             dType.dSleep(200)
-        dType.SetQueuedCmdStopExec(self.api)
+        dType.SetQueuedCmdStopExec(self.api)#stops executing the commands in the queue
 
-    #Toggles suction peripheral on/off
-    def toggleSuction(self, wait = True):
-        lastIndex = 0
-        if(self.suction):
-            self.lastIndex = dType.SetEndEffectorSuctionCup( self.api, True, False, isQueued = 0)[0]
-            self.suction = False
-        else:
-            self.lastIndex = dType.SetEndEffectorSuctionCup(self.api, True, True, isQueued = 0)[0]
-            self.suction = True
-        if(wait):
-            self.commandDelay(self.lastIndex)
-        return self.lastIndex
 
     def getPosition(self):
         return dType.GetPose(self.api)
 
     def moveArmRelXY(self, xrel, yrel, wait = True, jump = False):
+        """moves Dobot a number of coordinate steps relative to its current position without lowering the arm""" 
+        #eg if you want to shift it a few cm fromwhere it is at the moment
         positions = self.getPosition()
         return self.moveArmXY(positions[0] + xrel, positions[1] + yrel, wait, jump)
 
     #Moves arm to X/Y/Z Location
     def moveArmXY(self,x,y, wait = True, jump = False):
+        """moves Dobot to a new position without lowering the arm""" 
         return self.moveArmXYZ(x, y, self.homeZ, wait, jump)
     
     def moveArmRelXYZ(self, xrel, yrel, zrel, wait = True, jump = False):
+        """moves Dobot and arm a number of coordinate steps relative to its current position""" 
         positions = self.getPosition()
         return self.moveArmXYZ(positions[0] + xrel, positions[1] + yrel, positions[2] + zrel, wait, jump)
     
     
     # By passing on None as a coordinate parameter, the current arm position in givven axis will be used
     def moveArmXYZ(self,x,y, z, wait = True, jump = False):
-        if(x == None or y == None or z == None):
+        """moves Dobot and arm to a new position """ 
+        if(x == None or y == None or z == None):#in case you do not pass parameters into the functions
             position = self.getPosition()
             if(x == None):
                 x = position[0]
@@ -147,9 +142,7 @@ class DoBotArm:
             self.commandDelay(self.lastIndex)
         return self.lastIndex
 
-    def SetConveyor(self, enabled, speed = 15000):
-        self.lastIndex = dType.SetEMotor(self.api, 0, enabled, speed, isQueued = 1)[0]
-        self.commandDelay(self.lastIndex)
+    
         
     def RotateHead(self, rotation, wait = True):
         self.rotation = rotation
@@ -175,3 +168,6 @@ class DoBotArm:
         #if(wait):
         #    self.commandDelay(self.lastIndex)
         return self.lastIndex
+#def SetConveyor(self, enabled, speed = 15000):
+        self.lastIndex = dType.SetEMotor(self.api, 0, enabled, speed, isQueued = 1)[0]
+        self.commandDelay(self.lastIndex)
