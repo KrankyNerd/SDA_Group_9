@@ -139,9 +139,9 @@ def convert_camera2dobot_coordinates(
     homography_matrix, camera_point
 ) -> tuple[int, int]:
 
-    assert (
-        len(camera_point) == 2
-    ), f"Expected 2 values for the camera point, got {len(camera_point)} instead"
+  #  assert (
+   #     len(camera_point) == 2
+  #  ), f"Expected 2 values for the camera point, got {len(camera_point)} instead"
 
     # add artificially z coordinate for matrix multiplication to work
     camera_point = np.array([camera_point[0], camera_point[1], 1.0])
@@ -179,6 +179,8 @@ square_coordinates = myCamera.get_calibration_marker_as_tuple()
 converted_coordinates = convert_camera2dobot_coordinates(homography_matrix, square_coordinates)
 
 new_square_coordinates = (converted_coordinates[0], converted_coordinates[1], 30)
+
+print("arm go square")
 
 ctrlDobot.moveArmXYZ(new_square_coordinates)
 
