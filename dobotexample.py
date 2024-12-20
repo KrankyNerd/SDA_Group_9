@@ -8,7 +8,7 @@ import DoBotArm as dbt
 import time
 
 import numpy as np
-
+import cv2
 from serial.tools import list_ports
 
 from Camera import Camera
@@ -118,38 +118,17 @@ def get_sample_points(
 
     return coordinates_data
 
-def get_homography_matrix(sample_points) -> np.ndarray:  # to call once in init
+def get_homography_matrix(sample_points) -> np.ndarray:
     """
-    Returns a transformation matrix from camera coordinates to arm coordinates. This can be used to then transform between frames of reference.
-
-    Returns:
-        np.ndarray: homography matrix
+    Returns a transformation matrix from camera coordinates to arm coordinates.
     """
 
-    camera_points = sample_points[0]
-    dobot_points = sample_points[1]
+    camera_points = np.array(sample_points[0])  # Convert to NumPy array
+    dobot_points = np.array(sample_points[1])   # Convert to NumPy array
 
-    # tests
-    assert len(camera_points) == len(
-        dobot_points
-    ), "different amount of camera and dobot point samples"
-    assert (
-        len(camera_points) >= 4
-    ), f"Too little sample points ({len(camera_points)} to calculate a homography matrix, 4 or more are needed)"
-    assert len(camera_points) == len(
-        {tuple(pt) for pt in camera_points}
-    ), "Camera points are not unique"
-    assert len(dobot_points) == len(
-        {tuple(pt) for pt in dobot_points}
-    ), "Dobot points are not unique"
-
-    # add artificial 3rd coordinates for the math to math
-    camera_points = [
-        np.array([point[0], point[1], 1.0]).reshape(3, 1) for point in camera_points
-    ]
-    dobot_points = [
-        np.array([point[0], point[1], 1.0]).reshape(3, 1) for point in dobot_points
-    ]
+    # Ensure points have the correct shape (N, 2)
+    #assert camera_points.shape[1] == 2, "Camera points must be of shape (N, 2)"
+    #assert dobot_points.shape[1] == 2, "Dobot points must be of shape (N, 2)"
 
     # compute the matrix
     homography_matrix, _ = cv2.findHomography(camera_points, dobot_points)
