@@ -8,7 +8,7 @@ import DoBotArm as dbt
 import time
 
 import numpy as np
-
+import cv2
 from serial.tools import list_ports
 
 from Camera import Camera
