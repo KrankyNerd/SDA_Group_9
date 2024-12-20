@@ -78,25 +78,35 @@ def get_sample_points(
 
     # README: this implementation currently is based on moving to a couple hardcoded points that *must always* be in the cameras' FOV. There are better options which require more time of implementation, such as having a human move the dobot arm with the keyboard and recording a bunch of points, or a "smart" program that can move the dobot in intervals until it exits the FOV
 
-    # You need a minimum of 4 points to create a homography matrix
+    # we need a minimum of 4 points to create a homography matrix
     # The more points and the more variation the better
     hardcoded_dobot_poses = [
-        (0, 0, 0),
+        (170, 0, 0),
         (220, -60, 0),
         (0, 0, 0),
         (0, 0, 0),
     ]  # TODO: find out good poses throught trial and error
 
-    # getting first value
-    camera.run()  # TODO change it to new camera method that finds the white square
-    pixel_pos_1 = get_pixel_pos(detected_shapesdata)
-    arm_pos_1 = dobot.getPosition()
+    camera_coordinates_list = []
+    dobots_coordinates_list = []
 
-    # getting second value
-    camera.run()
-    dobot.moveArmXYZ()
-    pixel_pos_2 = get_pixel_pos(detected_shapesdata)
-    arm_pos_2 = dobot.getPosition()
+    for pose in hardcoded_dobot_poses:
+        x, y, z = pose  # Unpack the x, y, z coordinates from the current pose
+        dobot.moveArmXYZ(x, y, z)  # move arm
+        camera_coordinates = dobot.getPosition() #get camera coordinates
+        camera.run() # process image
+        dobot_coordinates = camera.run() #TODO change to find_white_square() or whatever
+
+        camera_coordinates_list.append(camera_coordinates)
+        dobots_coordinates_list.append(dobot_coordinates)
+
+        coordinates_data: Tuple[np.ndarray, np.ndarray] = (
+            np.array(camera_coordinates_list),
+            np.array(dobots_coordinates_list),
+        )
+        
+    return coordinates_data
+
 
 
 def get_homography_matrix(sample_points) -> np.ndarray:  # to call once in init
@@ -161,8 +171,8 @@ Plan for today
 
 1. [ ] Get white square (dobot) coordinates
 2. [ ] Implement the rest of get_sample_points()
-    2.1 [ ] manage to move the dobot
-    2.2 [ ] manage to get the dobot current coordinates
+    2.1 [x] manage to move the dobot
+    2.2 [x] manage to get the dobot current coordinates
 3. [ ] Find good hardcoded_points for the dobot to collect samples
 4. [ ] Run get_sample_points() and make sure the output makes sense, it a pair (tuple) of lists of points, the first from the camera and the second from the dobot
 5. [ ] Pass the collected points to get_homography_matrix() and verify it returns a 3x3 numpy matrix with floating values inside
