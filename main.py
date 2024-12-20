@@ -1,4 +1,4 @@
-"""main function, that controls the loading cycle"""
+"""main function that controls the loading cycle"""
 
 # 1import libraries and classes
 import threading
@@ -17,7 +17,7 @@ from typing import List, Tuple
 
 
 # 2 define constants
-homeX, homeY, homeZ = 170, 0, 0
+homeX, homeY, homeZ = 170, 0, 30
 
 
 # 3 Create objects of the needed classes
@@ -80,11 +80,11 @@ def get_sample_points(
 
     # we need a minimum of 4 points to create a homography matrix
     # The more points and the more variation the better
-    hardcoded_dobot_poses = [
-        (170, 0, 0),
-        (220, -60, 0),
-        (0, 0, 0),
-        (0, 0, 0),
+    hardcoded_dobot_poses = [180
+        (170, -25, 20),
+        (145, -20, 20),
+        (160, 10, 20),
+        (150, 0, 20),
     ]  # TODO: find out good poses throught trial and error
 
     camera_coordinates_list = []
@@ -173,7 +173,7 @@ Plan for today
 2. [ ] Implement the rest of get_sample_points()
     2.1 [x] manage to move the dobot
     2.2 [x] manage to get the dobot current coordinates
-3. [x] Find good hardcoded_points for the dobot to collect samples
+3. [ ] Find good hardcoded_points for the dobot to collect samples
 4. [ ] Run get_sample_points() and make sure the output makes sense, it a pair (tuple) of lists of points, the first from the camera and the second from the dobot
 5. [ ] Pass the collected points to get_homography_matrix() and verify it returns a 3x3 numpy matrix with floating values inside
 6. [ ] Now try using all this to make the robot go to a desired point in the camera, if it is simpler then just try making it go to a shape (instead of creating another way of selecting a point)
