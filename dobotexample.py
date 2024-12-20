@@ -137,7 +137,7 @@ def get_homography_matrix(sample_points) -> np.ndarray:
 
 def convert_camera2dobot_coordinates(
     homography_matrix, camera_point
-) -> Tuple[int, int]:
+) -> tuple[int, int]:
 
     assert (
         len(camera_point) == 2
