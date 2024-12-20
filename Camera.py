@@ -86,7 +86,7 @@ class Camera:
                 b, g, r = frame[y, x]
 
                 # Check for a white square (assuming white is approximately [255, 255, 255])
-                if shape_name == "Square" and b > 120 and g > 120 and r > 130:
+                if shape_name == "Square" and b > 100 and g > 120 and r > 120:
                     self.calibration_marker = {
                         "product_type": shape_name,
                         "product_colour": (b, g, r),
