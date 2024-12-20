@@ -176,6 +176,10 @@ myCamera.run()
 time.sleep(3)
 square_coordinates = myCamera.get_calibration_marker_as_tuple()
 
-new_square_coordinates = convert_camera2dobot_coordinates(homography_matrix, square_coordinates)
+converted_coordinates = convert_camera2dobot_coordinates(homography_matrix, square_coordinates)
+
+new_square_coordinates = (converted_coordinates[0], converted_coordinates[1], 30)
+
+ctrlDobot.moveArmXYZ(new_square_coordinates)
 
 ctrlDobot.DisconnectDobot()
