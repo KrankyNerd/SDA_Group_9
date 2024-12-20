@@ -173,6 +173,7 @@ time.sleep(3)
 #run camera
 print("camera go flash")
 myCamera.run()
+time.sleep(3)
 square_coordinates = myCamera.get_calibration_marker_as_tuple()
 
 print("dobot go to square")

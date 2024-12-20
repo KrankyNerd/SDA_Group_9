@@ -9,7 +9,7 @@ Control a camera object, get images and detect shapes in an image.
 
 
 class Camera:
-    THRESHOLD_VALUE = 30
+    THRESHOLD_VALUE = 35
     MAX_THRESHOLD_VALUE = 150
     MIN_CONTOUR_AREA = 200
     CROP_Y_START, CROP_Y_END, CROP_X_START, CROP_X_END = 168, 395, 213, 432
