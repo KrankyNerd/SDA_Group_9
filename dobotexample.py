@@ -117,6 +117,47 @@ def get_sample_points(
 
     return coordinates_data
 
+def get_homography_matrix(sample_points) -> np.ndarray:  # to call once in init
+    """
+    Returns a transformation matrix from camera coordinates to arm coordinates. This can be used to then transform between frames of reference.
+
+    Returns:
+        np.ndarray: homography matrix
+    """
+
+    camera_points = sample_points[0]
+    dobot_points = sample_points[1]
+
+    # tests
+    assert len(camera_points) == len(
+        dobot_points
+    ), "different amount of camera and dobot point samples"
+    assert (
+        len(camera_points) >= 4
+    ), f"Too little sample points ({len(camera_points)} to calculate a homography matrix, 4 or more are needed)"
+    assert len(camera_points) == len(
+        {tuple(pt) for pt in camera_points}
+    ), "Camera points are not unique"
+    assert len(dobot_points) == len(
+        {tuple(pt) for pt in dobot_points}
+    ), "Dobot points are not unique"
+
+    # add artificial 3rd coordinates for the math to math
+    camera_points = [
+        np.array([point[0], point[1], 1.0]).reshape(3, 1) for point in camera_points
+    ]
+    dobot_points = [
+        np.array([point[0], point[1], 1.0]).reshape(3, 1) for point in dobot_points
+    ]
+
+    # compute the matrix
+    homography_matrix, _ = cv2.findHomography(camera_points, dobot_points)
+
+    return homography_matrix
+
 
 get_sample_points(myCamera, ctrlDobot)
 
+get_homography_matrix(coordinates_data)
+
+print(homography_matrix)
