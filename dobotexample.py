@@ -3,8 +3,9 @@
 import threading
 import DoBotArm as dbt
 import time
+import numpy as np
 from serial.tools import list_ports
-import Camera
+from Camera import Camera
 homeX, homeY, homeZ = 170, 0, 30
 ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home= False)
 #ctrlDobot.rehome(homeX, homeY, )
@@ -28,8 +29,8 @@ time.sleep(1)
 # def SetConveyor(self, enabled, speed = 15000):
 
 def get_sample_points(
-    camera: Camera, dobot: Dobot
-) -> Tuple[List[np.ndarray], List[np.ndarray]]:
+    camera: Camera, dobot: dbt.DoBotArm
+) -> tuple[list[np.ndarray], list[np.ndarray]]:
     """
     Obtains a bunch of point samples expressed in both the given cameras' and dobots' frames of reference.
     """
@@ -38,7 +39,7 @@ def get_sample_points(
 
     # we need a minimum of 4 points to create a homography matrix
     # The more points and the more variation the better
-    hardcoded_dobot_poses = [180
+    hardcoded_dobot_poses = [
         (170, -25, 20),
         (145, -20, 20),
         (160, 10, 20),
