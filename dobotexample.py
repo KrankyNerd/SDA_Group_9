@@ -137,7 +137,7 @@ def get_homography_matrix(sample_points) -> np.ndarray:
 
 def convert_camera2dobot_coordinates(
     homography_matrix, camera_point
-) -> Tuple[int, int]:
+) -> tuple[int, int]:
 
     assert (
         len(camera_point) == 2
@@ -164,15 +164,24 @@ homography_matrix =  get_homography_matrix(sample_points)
 print(homography_matrix)
 
 # arm get out of camera pov
+print("arm go away")
 ctrlDobot.moveArmXYZ(None, -200, 30)
 time.sleep(3)
 ctrlDobot.moveArmXYZ(80, -200, 30)
 time.sleep(3)
 
 #run camera
+print("camera go flash")
 myCamera.run()
+time.sleep(3)
 square_coordinates = myCamera.get_calibration_marker_as_tuple()
 
+<<<<<<< HEAD
 new_square_coordinates = convert_camera2dobot_coordinates(homography_matrix, square_coordinates)
-
+=======
+print("dobot go to square")
+new_square_coordinates = (homography_matrix, square_coordinates)
 ctrlDobot.moveArmXYZ(new_square_coordinates)
+>>>>>>> e999edca8629e32625f88521ad2c6b16094d85fe
+
+ctrlDobot.DisconnectDobot()
