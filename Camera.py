@@ -58,7 +58,7 @@ class Camera:
         contours, _ = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         
         detected_shapesdata = []  # List to hold detected shape information
-        calibration_marker = None  # Variable to hold the white square for calibration
+        self.calibration_marker = None  # Variable to hold the white square for calibration
 
         for contour in contours:
             if cv2.contourArea(contour) < self.MIN_CONTOUR_AREA:
@@ -76,7 +76,7 @@ class Camera:
 
                 # Check for a white square (assuming white is approximately [255, 255, 255])
                 if shape_name == 'Square' and b > 240 and g > 240 and r > 240:
-                    calibration_marker = {
+                    self.calibration_marker = {
                         'product_type': shape_name,
                         'product_colour': (b, g, r),
                         'pixel_posx': x,
