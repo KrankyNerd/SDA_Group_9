@@ -54,7 +54,8 @@ def get_sample_points(
         dobot.moveArmXYZ(x, y, z)  # move arm
         camera_coordinates = dobot.getPosition() #get camera coordinates
         camera.run() # process image
-        dobot_coordinates = camera.run() #TODO change to find_white_square() or whatever
+        dobot_coordinates = camera.get_calibration_marker_as_tuple()
+        print(dobot_coordinates)
 
         camera_coordinates_list.append(camera_coordinates)
         dobots_coordinates_list.append(dobot_coordinates)
