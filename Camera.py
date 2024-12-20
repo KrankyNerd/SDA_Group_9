@@ -98,7 +98,7 @@ class Camera:
                     'pixel_posy': y      
                 })
 
-        return frame, detected_shapesdata, calibration_marker  # Return the processed image, detected shapes, and calibration marker
+        return frame, detected_shapesdata, self.calibration_marker  # Return the processed image, detected shapes, and calibration marker
     
     def get_calibration_marker_as_tuple(self):
         """Return the calibration marker as a tuple."""
@@ -110,7 +110,7 @@ class Camera:
         while True:
             captured_image = self.get_image()
             if captured_image is not None:
-                processed_image, detected_shapesdata, calibration_marker = self.process_image(captured_image)
+                processed_image, detected_shapesdata, self.calibration_marker = self.process_image(captured_image)
                 cv2.imshow("Processed Image", processed_image)
 
                 # Print detected shapes to the console
