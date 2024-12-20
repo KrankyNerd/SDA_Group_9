@@ -47,18 +47,18 @@ class Camera:
             return 'Circle'
 
     def process_image(self, frame):
-      
-        #converts captured image to grayscale
+        # Convert the captured image to grayscale
         grayimg = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         cv2.imshow("Gray Image", grayimg)
 
         _, threshold = cv2.threshold(grayimg, self.THRESHOLD_VALUE, self.MAX_THRESHOLD_VALUE, cv2.THRESH_BINARY)
         cv2.imshow("Thresholding", threshold)
 
-        #find the contours in the image
+        # Find the contours in the image
         contours, _ = cv2.findContours(threshold, cv2.RETR_TREE, cv2.CHAIN_APPROX_SIMPLE)
         
         detected_shapesdata = []  # List to hold detected shape information
+        calibration_marker = None  # Variable to hold the white square for calibration
 
         for contour in contours:
             if cv2.contourArea(contour) < self.MIN_CONTOUR_AREA:
@@ -66,13 +66,23 @@ class Camera:
 
             approx = cv2.approxPolyDP(contour, 0.1 * cv2.arcLength(contour, True), True)
             cv2.drawContours(frame, [contour], 0, (0, 0, 255), 2)
-            M = cv2.moments(contour)# Get the pixel position (center) of the contour
+            M = cv2.moments(contour)  # Get the pixel position (center) of the contour
 
             if M['m00'] != 0.0:  # Avoid division by zero
                 x = int(M['m10'] / M['m00'])
                 y = int(M['m01'] / M['m00'])
                 shape_name = self.detect_shape(approx)
                 b, g, r = frame[y, x]
+
+                # Check for a white square (assuming white is approximately [255, 255, 255])
+                if shape_name == 'Square' and b > 240 and g > 240 and r > 240:
+                    calibration_marker = {
+                        'product_type': shape_name,
+                        'product_colour': (b, g, r),
+                        'pixel_posx': x,
+                        'pixel_posy': y      
+                    }
+                    continue  # Skip adding the white square to the main list
 
                 # Put text on image
                 cv2.putText(frame, shape_name, (x + 2, y - 25), cv2.FONT_HERSHEY_SIMPLEX, 0.5, (int(b), int(g), int(r)), 2)
@@ -81,7 +91,6 @@ class Camera:
                             cv2.FONT_HERSHEY_SIMPLEX, 0.5, (int(b), int(g), int(r)), 2)
 
                 # Append detected shape information to the list
-                # why? shouldn't this happen in GUI? -isa
                 detected_shapesdata.append({
                     'product_type': shape_name,
                     'product_colour': (b, g, r),
@@ -89,7 +98,18 @@ class Camera:
                     'pixel_posy': y      
                 })
 
-        return frame, detected_shapesdata  # Return both the processed image and detected shapes
+        return frame, detected_shapesdata, calibration_marker  # Return the processed image, detected shapes, and calibration marker
+    
+    def get_calibration_marker_as_tuple(self):
+        """Return the calibration marker as a tuple."""
+        if self.calibration_marker:
+            return (
+                self.calibration_marker['product_type'],
+                self.calibration_marker['product_colour'],
+                self.calibration_marker['pixel_posx'],
+                self.calibration_marker['pixel_posy'],
+            )
+        return None  # Return None if no calibration marker is detected
 
     def run(self):
         while True:
