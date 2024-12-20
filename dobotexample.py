@@ -4,11 +4,12 @@ import threading
 import DoBotArm as dbt
 import time
 from serial.tools import list_ports
+import Camera
 homeX, homeY, homeZ = 170, 0, 30
 ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home= False)
 #ctrlDobot.rehome(homeX, homeY, )
 
-camera = Camera(address=2)
+camera = Camera(address=1)
 
 
 
