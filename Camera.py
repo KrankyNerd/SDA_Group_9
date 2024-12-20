@@ -115,7 +115,7 @@ class Camera:
         while True:
             captured_image = self.get_image()
             if captured_image is not None:
-                processed_image, detected_shapesdata = self.process_image(captured_image)
+                processed_image, detected_shapesdata, calibration_marker = self.process_image(captured_image)
                 cv2.imshow("Processed Image", processed_image)
 
                 # Print detected shapes to the console
