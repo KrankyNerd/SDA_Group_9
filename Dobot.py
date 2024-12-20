@@ -45,8 +45,10 @@ class Dobot:
 
         return None
 
-    def get_current_pos():
-        pass
+    def get_current_pos(self):
+        pose = self.GetPose(self.api)  # Call the inherited GetPose method
+        x, y, z = pose[0], pose[1], pose[2]  # Extract x, y, z from the returned list
+        return (x, y, z)  # Return as a tuple
 
     def get_desired_pos():
         placeholder = 0
