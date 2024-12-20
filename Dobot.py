@@ -52,33 +52,16 @@ class Dobot:
         placeholder = 0
         return placeholder  # TODO:
 
-    def pick():  # platform + object z
-        ctrlDobot.toggleSuction()
+    def pick(self):  # platform + object z
+        self.toggleSuction()
         # Dobot.moveArm(x,y,(home(50) to top of object(21.5)))
         return None
 
-    def place():  # conveyor z
+    def place(self):  # conveyor z
         # Dobot.moveArm(x,y,(Conveyor Height(45.5)+object Height(21.5)))
-        ctrlDobot.toggleSuction()
+        self.toggleSuction()
         return None
 
-    def get_ratio():  # to call once in init
-        ctrlDobot.moveHome()
-
-        # getting first value
-        Camera.run()
-        pixel_pos_1 = get_pixel_pos(detected_shapesdata)
-        # getting second value
-        ctrlDobot.moveArmXYZ(220, -60, 0)
-        pixel_pos_2 = get_pixel_pos(detected_shapesdata)
-
-
-        # get-posX and Y of white cube
-        # once detected get pixel_pos
-        # move arm x,y by n-amount, get-pos
-        # get pixel pos
-        # ratio = pixel_pos-pixelpos0/ get_pos - get_pos0
-        return ratio
 
     def get_pixel_pos(detected_shapesdata):
         """
