@@ -94,7 +94,7 @@ def get_sample_points(
 
         dobot.moveArmXYZ(x, y, z)  # move arm
 
-        pose = ctrlDobot.GetPose(self.api)  # Call the inherited GetPose method
+        pose = ctrlDobot.GetPosition(self.api)  # Call the inherited GetPose method
         dobot_coordinates = pose[0], pose[1], pose[2]  # Extract x, y, z from the returned list
         print(dobot_coordinates)
 
