@@ -164,15 +164,19 @@ homography_matrix =  get_homography_matrix(sample_points)
 print(homography_matrix)
 
 # arm get out of camera pov
+print("arm go away")
 ctrlDobot.moveArmXYZ(None, -200, 30)
 time.sleep(3)
 ctrlDobot.moveArmXYZ(80, -200, 30)
 time.sleep(3)
 
 #run camera
+print("camera go flash")
 myCamera.run()
 square_coordinates = myCamera.get_calibration_marker_as_tuple()
 
+print("dobot go to square")
 new_square_coordinates = (homography_matrix, square_coordinates)
-
 ctrlDobot.moveArmXYZ(new_square_coordinates)
+
+ctrlDobot.DisconnectDobot()
