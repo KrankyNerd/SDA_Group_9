@@ -164,9 +164,9 @@ homography_matrix =  get_homography_matrix(sample_points)
 print(homography_matrix)
 
 # arm get out of camera pov
-ctrlDobot.moveArmXYZ(None, -60, 30)
+ctrlDobot.moveArmXYZ(None, -200, 30)
 time.sleep(3)
-ctrlDobot.moveArmXYZ(220, -60, 30)
+ctrlDobot.moveArmXYZ(80, -200, 30)
 time.sleep(3)
 
 #run camera
