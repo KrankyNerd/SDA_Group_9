@@ -30,7 +30,7 @@ myCamera = Camera(address=1)
 
 ctrlDobot.moveHome()
 
-print("movement finshed")
+print("homing finished")
 
 time.sleep(1)
 
@@ -49,6 +49,7 @@ time.sleep(1)
 
 # def SetConveyor(self, enabled, speed = 15000):
 
+# ------------------------- methods ------------------------------
 
 def get_sample_points(
 
@@ -155,9 +156,44 @@ def get_homography_matrix(sample_points) -> np.ndarray:  # to call once in init
 
     return homography_matrix
 
+def convert_camera2dobot_coordinates(
+    homography_matrix, camera_point
+) -> Tuple[int, int]:
+
+    assert (
+        len(camera_point) == 2
+    ), f"Expected 2 values for the camera point, got {len(camera_point)} instead"
+
+    # add artificially z coordinate for matrix multiplication to work
+    camera_point = np.array([camera_point[0], camera_point[1], 1.0])
+    # maybe you need to reshape to a column vector, instead of a row vector
+    # camera_point = camera_point.reshape(3,1)
+    dobot_point = np.dot(homography_matrix, camera_point)
+    dobot_point /= dobot_point[2]  # Normalize, not sure why
+
+    return dobot_point
+
+
+#------------------------ end of methods -------------------------
+
+
 
 sample_points = get_sample_points(myCamera, ctrlDobot)
 
 homography_matrix =  get_homography_matrix(sample_points)
 
 print(homography_matrix)
+
+# arm get out of camera pov
+ctrlDobot.moveArmXYZ(None, -60, 30)
+time.sleep(3)
+ctrlDobot.moveArmXYZ(220, -60, 30)
+time.sleep(3)
+
+#run camera
+myCamera.run()
+square_coordinates = myCamera.get_calibration_marker_as_tuple()
+
+new_square_coordinates = (homography_matrix, square_coordinates)
+
+ctrlDobot.moveArmXYZ(new_square_coordinates)
