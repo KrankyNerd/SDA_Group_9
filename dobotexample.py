@@ -156,8 +156,8 @@ def get_homography_matrix(sample_points) -> np.ndarray:  # to call once in init
     return homography_matrix
 
 
-get_sample_points(myCamera, ctrlDobot)
+sample_points = get_sample_points(myCamera, ctrlDobot)
 
-get_homography_matrix(coordinates_data)
+homography_matrix =  get_homography_matrix(sample_points)
 
 print(homography_matrix)
