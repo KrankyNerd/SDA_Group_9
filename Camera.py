@@ -103,12 +103,7 @@ class Camera:
     def get_calibration_marker_as_tuple(self):
         """Return the calibration marker as a tuple."""
         if self.calibration_marker:
-            return (
-                self.calibration_marker['product_type'],
-                self.calibration_marker['product_colour'],
-                self.calibration_marker['pixel_posx'],
-                self.calibration_marker['pixel_posy'],
-            )
+            return ( self.calibration_marker['pixel_posx', 'pixel_posy'])
         return None  # Return None if no calibration marker is detected
 
     def run(self):
