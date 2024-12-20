@@ -176,5 +176,5 @@ Plan for today
 3. [x] Find good hardcoded_points for the dobot to collect samples
 4. [x] Run get_sample_points() and make sure the output makes sense, it a pair (tuple) of lists of points, the first from the camera and the second from the dobot
 5. [x] Pass the collected points to get_homography_matrix() and verify it returns a 3x3 numpy matrix with floating values inside
-6. [ ] Now try using all this to make the robot go to a desired point in the camera, if it is simpler then just try making it go to a shape (instead of creating another way of selecting a point)
+6. [10% done ] Now try using all this to make the robot go to a desired point in the camera, if it is simpler then just try making it go to a shape (instead of creating another way of selecting a point)
 """
