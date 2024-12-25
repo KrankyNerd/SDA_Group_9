@@ -71,14 +71,14 @@ class GUI:
         return self.product_list
     def display_products(self):
         """
-        Display all products in product_list on screen.
+        List all products in product_list on screen.
         """
         for product in self.product_list:
             print(f"Detected Product{product.ID}:{product.product_type}of colour {product.product_colour} at x:{product.pixel_posx} and y{product.pixel_posy}")
         
 
         return None
-    
+                
 if __name__ == "__main__": 
     myGUI= GUI(10,500,[],True)
     camera= Camera()
@@ -88,10 +88,14 @@ if __name__ == "__main__":
         frame=camera.get_image()
         if frame is not None:
             processed_image, detected_shapesdata = camera.process_image(frame)#detected_shapesdata =camera.process_image(frame)[1]
+            cv2.imshow("Processed Image", processed_image)
             print (detected_shapesdata)
             myGUI.instantiate_product(detected_shapesdata)
             myGUI.display_products()
             cv2.imshow("Processed Image", processed_image)
+
+            #check for shape clicks
+            
         if cv2.waitKey(1) & 0xFF == ord('q'):
                 break
     
