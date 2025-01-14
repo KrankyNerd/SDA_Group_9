@@ -95,8 +95,8 @@ def get_sample_points(
 
         dobot.moveArmXYZ(x, y, z)  # move arm
 
-        pose = ctrlDobot.getPosition()  # Call the inherited GetPose method
-        dobot_coordinates = pose[0], pose[1], pose[2]  # Extract x, y, z from the returned list
+        pose = ctrlDobot.getPosition() 
+        dobot_coordinates = pose[0], pose[1]#, pose[2] we should ignore this coordinate? 
         print(dobot_coordinates)
 
         camera.run() # process image
@@ -147,7 +147,7 @@ def convert_camera2dobot_coordinates(
     
     dobot_point /= dobot_point[2]  # Normalize by the third element
 
-    return dobot_point
+    return dobot_point[:2]
 
 
 #------------------------ end of methods -------------------------
@@ -192,4 +192,4 @@ ctrlDobot.moveArmXYZ(160, -200, 30)
 ctrlDobot.moveHome()
 
 ctrlDobot.moveArmXYZ(converted_coordinates[0], converted_coordinates[1], 30)
-#ctrlDobot.DisconnectDobot()
+ctrlDobot.DisconnectDobot()
