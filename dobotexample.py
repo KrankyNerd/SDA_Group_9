@@ -181,7 +181,18 @@ square_coordinates = myCamera.get_calibration_marker_as_tuple()
 
 converted_coordinates = convert_camera2dobot_coordinates(homography_matrix, square_coordinates)
 
-new_square_coordinates = (converted_coordinates[0], converted_coordinates[1], 30)
+detected_shapesdata = myCamera.run()  # Run and retrieve detected shapes data
+
+# Process detected shapes
+if detected_shapesdata:
+    for shape in detected_shapesdata:
+
+        positions = [(shape['pixel_posx'], shape['pixel_posy']) for shape in detected_shapesdata]
+else:
+    print("No shapes detected.")
+
+
+new_square_coordinates = positions[0]
 
 print("arm go square")
 
