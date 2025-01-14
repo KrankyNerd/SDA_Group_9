@@ -45,6 +45,8 @@ class GUI:
         
         :param detected_shapesdata: List of dictionaries containing shape data.
         """
+        #Clear productlist at the end of each cycle
+        self.product_list =[]
         product_counter = len(self.product_list)  # Continue ID from current list size
         for product_dict in detected_shapesdata:
             product = Product(
@@ -96,6 +98,7 @@ if __name__ == "__main__":
                                 break
 
                 cv2.setMouseCallback("Processed Image", handle_mouse_click)
+                
 
             # Break the loop on 'q' key press
             if cv2.waitKey(1) & 0xFF == ord('q'):

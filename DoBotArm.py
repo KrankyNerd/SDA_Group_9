@@ -168,6 +168,7 @@ class DoBotArm:
         #if(wait):
         #    self.commandDelay(self.lastIndex)
         return self.lastIndex
+    #Move conveyor
     def SetConveyor(self, enabled, speed = 15000):
         self.lastIndex = dType.SetEMotor(self.api, 0, enabled, speed, isQueued = 1)[0]
         self.commandDelay(self.lastIndex)
