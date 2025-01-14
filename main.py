@@ -16,11 +16,11 @@ from typing import List, Tuple
 # from serial.tools import list_ports
 
 
-# 2 define constants
+# constants
 homeX, homeY, homeZ = 170, 0, 30
 
 
-# 3 Create objects of the needed classes
+# objects
 conveyor = Conveyor(True, 0)
 camera = Camera(address=2)
 end_effector = EndEffector(False)
@@ -31,12 +31,12 @@ myDobot = dbt.DoBotArm(
     "COM3", homeX, homeY, homeZ, home=False
 )  # FIX THIS, should be from Dobot.py
 
+#initialization
 print("starting")
 
-myDobot.moveHome()  # this needs to be here for some reason
-myDobot.moveArmXYZ(x=170, y=50, z=0)
-myDobot.moveArmXYZ(x=170, y=0, z=0)
-time.sleep(2)
+myDobot.moveHome()  # README: this assumes the arm is initialized in DOBOTLAB with home position (170, 0, 30)
+
+
 # 4 Camera setup and  Camera image detection
 camera.run()
 
@@ -85,7 +85,7 @@ def get_sample_points(
         (145, -20, 20),
         (160, 10, 20),
         (150, 0, 20),
-    ]  # TODO: find out good poses throught trial and error
+    ] 
 
     camera_coordinates_list = []
     dobots_coordinates_list = []
@@ -166,15 +166,4 @@ def convert_camera2dobot_coordinates(
     return dobot_point
 
 
-"""
-Plan for today
 
-1. [x] Get white square (dobot) coordinates
-2. [x] Implement the rest of get_sample_points()
-    2.1 [x] manage to move the dobot
-    2.2 [x] manage to get the dobot current coordinates
-3. [x] Find good hardcoded_points for the dobot to collect samples
-4. [x] Run get_sample_points() and make sure the output makes sense, it a pair (tuple) of lists of points, the first from the camera and the second from the dobot
-5. [x] Pass the collected points to get_homography_matrix() and verify it returns a 3x3 numpy matrix with floating values inside
-6. [ ] Now try using all this to make the robot go to a desired point in the camera, if it is simpler then just try making it go to a shape (instead of creating another way of selecting a point)
-"""

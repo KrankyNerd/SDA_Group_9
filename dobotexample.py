@@ -1,4 +1,4 @@
-"""main function, that controls the loading cycle"""
+"""testing moving the arm and changing coordinates"""
 
 #1import libraries and classes
 
