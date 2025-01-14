@@ -1,6 +1,5 @@
 from Camera import *
 
-
 class Dobot:
     def __init__(
         self,
