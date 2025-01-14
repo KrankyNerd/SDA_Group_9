@@ -174,6 +174,9 @@ time.sleep(3)
 print("camera go flash")
 myCamera.run()
 time.sleep(3)
+print("detected shapes:")
+print(myCamera.detected_shapesdata)
+
 square_coordinates = myCamera.get_calibration_marker_as_tuple()
 
 converted_coordinates = convert_camera2dobot_coordinates(homography_matrix, square_coordinates)
