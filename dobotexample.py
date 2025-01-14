@@ -166,16 +166,15 @@ print(homography_matrix)
 # arm get out of camera pov
 print("arm go away")
 ctrlDobot.moveArmXYZ(None, -200, 30)
-time.sleep(3)
+time.sleep(2)
 ctrlDobot.moveArmXYZ(80, -200, 30)
-time.sleep(3)
+time.sleep(2)
 
 #run camera
 print("camera go flash")
 myCamera.run()
-time.sleep(3)
-print("detected shapes:")
-print(myCamera.detected_shapesdata)
+time.sleep(2)
+
 
 square_coordinates = myCamera.get_calibration_marker_as_tuple()
 
