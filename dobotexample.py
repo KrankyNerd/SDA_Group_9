@@ -193,10 +193,10 @@ print("arm go square")
 ctrlDobot.moveArmXYZ(160, -200, 30)
 ctrlDobot.moveHome()
 
-ctrlDobot.moveArmXYZ(square_coordinates[0], None, 30)
+ctrlDobot.moveArmXYZ(converted_coordinates[0], None, 30)
 
 time.sleep(2)
 print("Yes")
-ctrlDobot.moveArmXYZ(square_coordinates[0], square_coordinates[1], 30)
+ctrlDobot.moveArmXYZ(converted_coordinates[0], converted_coordinates[1], 30)
 
 ctrlDobot.DisconnectDobot()
