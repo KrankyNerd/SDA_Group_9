@@ -22,8 +22,6 @@ ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home= False)
 myCamera = Camera(address=1)
 
 
-
-
 #print("starting")
 
 #ctrlDobot.moveArmXYZ(x= 170, y= -100, z= 40)
