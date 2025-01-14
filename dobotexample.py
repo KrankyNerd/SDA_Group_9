@@ -139,16 +139,13 @@ def convert_camera2dobot_coordinates(
     homography_matrix, camera_point
 ) -> tuple[int, int]:
 
-  #  assert (
-   #     len(camera_point) == 2
-  #  ), f"Expected 2 values for the camera point, got {len(camera_point)} instead"
-
-    # add artificially z coordinate for matrix multiplication to work
-    camera_point = np.array([camera_point[0], camera_point[1], 20.0])
-    # maybe you need to reshape to a column vector, instead of a row vector
-    # camera_point = camera_point.reshape(3,1)
-    dobot_point = np.dot(homography_matrix, camera_point)
-    dobot_point /= dobot_point[2]  # Normalize, not sure why
+    camera_point = np.array([camera_point[0], camera_point[1], 30])  # Append artificial z-coordinate for matrix multiplication
+    dobot_point = np.dot(homography_matrix, camera_point)  # Apply the homography matrix
+    
+    if dobot_point[2] == 0:  # Handle division by zero
+        raise ValueError("Invalid transformation: homogeneous coordinate is zero.")
+    
+    dobot_point /= dobot_point[2]  # Normalize by the third element
 
     return dobot_point
 
