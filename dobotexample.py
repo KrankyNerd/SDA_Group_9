@@ -161,8 +161,6 @@ sample_points = get_sample_points(myCamera, ctrlDobot)
 
 homography_matrix =  get_homography_matrix(sample_points)
 
-print(homography_matrix)
-
 # arm get out of camera pov
 print("arm go away")
 ctrlDobot.moveArmXYZ(None, -200, 30)
@@ -175,11 +173,6 @@ print("camera go flash")
 myCamera.run()
 time.sleep(2)
 
-
-square_coordinates = myCamera.get_calibration_marker_as_tuple()
-
-converted_coordinates = convert_camera2dobot_coordinates(homography_matrix, square_coordinates)
-
 detected_shapesdata = myCamera.run()  # Run and retrieve detected shapes data
 
 # Process detected shapes
@@ -190,11 +183,20 @@ if detected_shapesdata:
 else:
     print("No shapes detected.")
 
+square_coordinates = positions[0]
 
-new_square_coordinates = positions[0]
+converted_coordinates = convert_camera2dobot_coordinates(homography_matrix, square_coordinates)
 
 print("arm go square")
 
-ctrlDobot.moveArmXYZ(new_square_coordinates)
+
+ctrlDobot.moveArmXYZ(160, -200, 30)
+ctrlDobot.moveHome()
+
+ctrlDobot.moveArmXYZ(square_coordinates[0], None, 30)
+
+time.sleep(2)
+print("Yes")
+ctrlDobot.moveArmXYZ(square_coordinates[0], square_coordinates[1], 30)
 
 ctrlDobot.DisconnectDobot()
