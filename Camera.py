@@ -52,6 +52,7 @@ class Camera:
             return "Circle"
 
     def process_image(self, frame):
+        frame = cv2.flip(frame, 1)
         # Convert the captured image to grayscale
         grayimg = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
         cv2.imshow("Gray Image", grayimg)

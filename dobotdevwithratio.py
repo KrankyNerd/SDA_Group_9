@@ -1,6 +1,6 @@
-"""testing moving the arm and changing coordinates"""
+"""testing moving the arm and changing coordinates with pixel to meter ratio, not with matrix transformation"""
 
-#1import libraries and classes
+#import libraries and classes
 
 import threading
 
@@ -14,25 +14,11 @@ from serial.tools import list_ports
 from Camera import Camera
 
 homeX, homeY, homeZ = 170, 0, 30
-
 ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home= False)
-
-#ctrlDobot.rehome(homeX, homeY, )
-
 myCamera = Camera(address=1)
-
-
-
-
-#print("starting")
-
-#ctrlDobot.moveArmXYZ(x= 170, y= -100, z= 40)
-
 ctrlDobot.moveHome()
-
-print("homing finished")
-
 time.sleep(1)
+print("homing finished")
 
 #ctrlDobot.moveArmXYZ(175, -25, 20)
 
