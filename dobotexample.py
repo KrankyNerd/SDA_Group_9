@@ -73,13 +73,13 @@ def get_sample_points(
 
     hardcoded_dobot_poses = [
 
-        (170, -25, 0),
+        (170, -25, 20),
 
-        (145, -20, 0),
+        (145, -20, 20),
 
-        (160, 10, 0),
+        (160, 10, 20),
 
-        (150, 0, 0),
+        (150, 0, 20),
 
     ]  # TODO: find out good poses throught trial and error
 
@@ -144,7 +144,7 @@ def convert_camera2dobot_coordinates(
   #  ), f"Expected 2 values for the camera point, got {len(camera_point)} instead"
 
     # add artificially z coordinate for matrix multiplication to work
-    camera_point = np.array([camera_point[0], camera_point[1], 30])
+    camera_point = np.array([camera_point[0], camera_point[1], 20.0])
     # maybe you need to reshape to a column vector, instead of a row vector
     # camera_point = camera_point.reshape(3,1)
     dobot_point = np.dot(homography_matrix, camera_point)
@@ -195,4 +195,4 @@ ctrlDobot.moveArmXYZ(160, -200, 30)
 ctrlDobot.moveHome()
 
 ctrlDobot.moveArmXYZ(converted_coordinates[0], converted_coordinates[1], 30)
-ctrlDobot.DisconnectDobot()
+#ctrlDobot.DisconnectDobot()
