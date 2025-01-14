@@ -156,6 +156,7 @@ class Camera:
 
             if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
+        return detected_shapesdata
 
     def release(self):
         self.capture.release()
