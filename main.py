@@ -167,8 +167,6 @@ def convert_camera2dobot_coordinates(
 
 
 
-<<<<<<< HEAD
-=======
 1. [x] Get white square (dobot) coordinates
 2. [x] Implement the rest of get_sample_points()
     2.1 [x] manage to move the dobot
@@ -178,4 +176,3 @@ def convert_camera2dobot_coordinates(
 5. [x] Pass the collected points to get_homography_matrix() and verify it returns a 3x3 numpy matrix with floating values inside
 6. [10% done ] Now try using all this to make the robot go to a desired point in the camera, if it is simpler then just try making it go to a shape (instead of creating another way of selecting a point)
 """
->>>>>>> f646c5aabbb2e142ce498d11e9429cd4dea87542
