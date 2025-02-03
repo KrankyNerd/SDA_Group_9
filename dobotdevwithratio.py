@@ -50,7 +50,7 @@ detected_shapesdata = myCamera.run()
 # change this to get positions in centimeters (CONVERT)
 if detected_shapesdata:
     for shape in detected_shapesdata:
-        positions = [(shape['pixel_posx']*pixel_to_cm, shape['pixel_posy']*pixel_to_cm) for shape in detected_shapesdata]
+        positions = [(shape['pixel_posx']*xpixel_to_cm, shape['pixel_posy']*ypixel_to_cm) for shape in detected_shapesdata]
 else:
     print("No shapes detected.")
 
@@ -59,12 +59,12 @@ ctrlDobot.moveHome()
 time.sleep(2)
 print("YEs")
 
-ctrlDobot.moveArmXYZ(138.4, -63.8, 30)
+ctrlDobot.moveArmXYZ(138.4, 67.8, 30)
 print("Position 1")
 
 for x, y in positions:
     dobot_x = 138.4 + x*cm_to_dobot
-    dobot_y = -63.8 + y*cm_to_dobot
+    dobot_y = 67.8 + y*cm_to_dobot
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
     print(dobot_x)
     print(dobot_y)
