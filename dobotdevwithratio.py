@@ -54,7 +54,12 @@ else:
     print("No shapes detected.")
 
 #for every shape, dobot coordinate =  position (x.y) in cm * 10.528
+ctrlDobot.moveHome()
+time.sleep(2)
+print("YEs")
+
 ctrlDobot.moveArmXYZ(138.4, -63.8, 30)
+print("Position 1")
 
 for x, y in positions:
     dobot_x = 138.4 + x*cm_to_dobot
