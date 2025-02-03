@@ -26,19 +26,34 @@ myCamera = Camera(address=1)
 
 # ------------------- MAIN   START -------------------------
 
+# Define the function outside the class
+def toggleSuction(self, state, wait=True):
+    """
+    Toggles the suction cup ON/OFF.
+    :param state: True to turn suction ON, False to turn it OFF
+    :param wait: If True, waits for execution
+    """
+    self.suction = state  # Update suction state variable
+    self.lastIndex = dType.SetEndEffectorSuctionCup(self.api, 1, 1 if state else 0, isQueued=1)[0]
+    
+    if wait:
+        self.commandDelay(self.lastIndex)
+    return self.lastIndex
+
+# Monkey patch the function to the object
+from types import MethodType
+ctrlDobot.toggleSuction = MethodType(toggleSuction, ctrlDobot)
+
 ctrlDobot.moveHome()
 time.sleep(1)
-print("homing finished")
 
 #the base is 220px x 220px
 #and 0.16m x 0.16m
 # 0r 12.5cm x 12.5cm if you consider the center of the products
-""" 
+
 # arm get out of camera pov
 print("arm go away")
 ctrlDobot.moveArmXYZ(None, -200, 30)
-time.sleep(2)
-ctrlDobot.moveArmXYZ(80, -200, 30)
 time.sleep(2)
 
 #run camera
@@ -62,16 +77,13 @@ print("Yes")
 ctrlDobot.moveArmXYZ(138, -48, 30)
 print("Position 1")
 
-
 for x, y in positions:
-    dobot_x = x* 128 /180
-    dobot_y = -(y - 180)* 133/180
+    dobot_x = (x-20)*0.71 + 138.2
+    dobot_y = (y - 20)*(-0.7383) + 85
     print(dobot_x)
     print(dobot_y)
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
+    ctrlDobot.toggleSuction(True)
     time.sleep(2)
-"""
-
-ctrlDobot.moveArmXYZ(138.2+ 128/2,-47.9+ 133/2, 30)
 time.sleep(5)
 #ctrlDobot.DisconnectDobot()
