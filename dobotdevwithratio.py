@@ -10,9 +10,10 @@ from Camera import Camera
 
 #constants
 homeX, homeY, homeZ = 170, 0, 30
-xpixel_to_cm = 1/17.4
+xpixel_to_cm = 1/17.4 #proportion pixel/size
 ypixel_to_cm = 1/18.16
-cm_to_dobot = 10.528
+cm_to_dobot_x = 10.64
+cm_to_dobot_y = 10.08
 #conveyorPos = 20, -220, 30
 
 #objects
@@ -22,7 +23,6 @@ myCamera = Camera(address=1)
 #-----------------------methods-------------------------
 
 #--------------- end of methods -------------------------
-
 
 # ------------------- MAIN   START -------------------------
 
@@ -63,8 +63,8 @@ ctrlDobot.moveArmXYZ(138.4, -63.8, 30)
 print("Position 1")
 
 for x, y in positions:
-    dobot_x = 138.4 + x*cm_to_dobot
-    dobot_y = -63.8 + y*cm_to_dobot
+    dobot_x = 138 + x*cm_to_dobot_x
+    dobot_y = -48 + y*cm_to_dobot_y
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
     print(dobot_x)
     print(dobot_y)
