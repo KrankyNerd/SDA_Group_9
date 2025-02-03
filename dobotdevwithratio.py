@@ -57,8 +57,8 @@ else:
 ctrlDobot.moveArmXYZ(138.4, -63.8, 30)
 
 for x, y in positions:
-    dobot_x = x*cm_to_dobot
-    dobot_y = -y*cm_to_dobot
+    dobot_x = 138.4 + x*cm_to_dobot
+    dobot_y = -63.8 + y*cm_to_dobot
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
     print(dobot_x)
     print(dobot_y)
