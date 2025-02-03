@@ -79,11 +79,14 @@ for x, y in positions:
     dobot_x = 0.71 * x + 124
     dobot_y = -0.738 * y + 99.76
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
-    ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -31.5)
+    ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -33.5)
     #ctrlDobot.toggleSuction()
     #ctrlDobot.pickToggle(-31.5, True)
     time.sleep(2)
     ctrlDobot.toggleSuction(True)
+    ctrlDobot.moveArmXYZ(200, 45, 30)
+    time.sleep(2)
+    ctrlDobot.toggleSuction(False)
     print(dobot_x)
     print(dobot_y)
     time.sleep(2)
