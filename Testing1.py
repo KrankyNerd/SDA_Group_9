@@ -7,6 +7,8 @@ import numpy as np
 import cv2
 from serial.tools import list_ports
 from Camera import Camera
+import threading
+
 
 #constants
 homeX, homeY, homeZ = 170, 0, 30
@@ -53,21 +55,19 @@ print("homing finished")
 # arm get out of camera pov
 print("arm go away")
 ctrlDobot.moveArmXYZ(None, -200, 30)
-time.sleep(2)
-ctrlDobot.moveArmXYZ(80, -200, 30)
-time.sleep(2)
+time.sleep(1)
 
 #run camera
 print("camera go flash")
 myCamera.run()
-time.sleep(2)
+time.sleep(1)
 
 detected_shapesdata = myCamera.run() 
 
 # change this to get positions in centimeters (CONVERT)
 if detected_shapesdata:
     for shape in detected_shapesdata:
-        positions = [(shape['pixel_posx']*pixel_to_cm, shape['pixel_posy']*pixel_to_cm) for shape in detected_shapesdata]
+        positions = [(shape['pixel_posx'], shape['pixel_posy']) for shape in detected_shapesdata]
 else:
     print("No shapes detected.")
 
@@ -75,9 +75,13 @@ else:
 ctrlDobot.moveArmXYZ(138.4, -63.8, 30)
 
 for x, y in positions:
-    dobot_x = 138.2 + x*cm_to_dobot
-    dobot_y = -47.9 + y*cm_to_dobot
+    dobot_x = 0.71 * x + 124
+    dobot_y = -0.738 * y + 99.76
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
+    ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -31.5)
+    #ctrlDobot.toggleSuction()
+    #ctrlDobot.pickToggle(-31.5, True)
+    time.sleep(2)
     ctrlDobot.toggleSuction(True)
     print(dobot_x)
     print(dobot_y)
