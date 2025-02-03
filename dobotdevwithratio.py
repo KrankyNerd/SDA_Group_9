@@ -26,23 +26,6 @@ myCamera = Camera(address=1)
 
 # ------------------- MAIN   START -------------------------
 
-# Define the function outside the class
-def toggleSuction(self, state, wait=True):
-    """
-    Toggles the suction cup ON/OFF.
-    :param state: True to turn suction ON, False to turn it OFF
-    :param wait: If True, waits for execution
-    """
-    self.suction = state  # Update suction state variable
-    self.lastIndex = dType.SetEndEffectorSuctionCup(self.api, 1, 1 if state else 0, isQueued=1)[0]
-    
-    if wait:
-        self.commandDelay(self.lastIndex)
-    return self.lastIndex
-
-# Monkey patch the function to the object
-from types import MethodType
-ctrlDobot.toggleSuction = MethodType(toggleSuction, ctrlDobot)
 
 ctrlDobot.moveHome()
 time.sleep(1)
@@ -83,7 +66,6 @@ for x, y in positions:
     print(dobot_x)
     print(dobot_y)
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
-    ctrlDobot.toggleSuction(True)
     time.sleep(2)
 time.sleep(5)
 #ctrlDobot.DisconnectDobot()
