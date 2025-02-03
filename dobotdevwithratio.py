@@ -33,7 +33,7 @@ print("homing finished")
 #the base is 220px x 220px
 #and 0.16m x 0.16m
 # 0r 12.5cm x 12.5cm if you consider the center of the products
-
+""" 
 # arm get out of camera pov
 print("arm go away")
 ctrlDobot.moveArmXYZ(None, -200, 30)
@@ -62,7 +62,7 @@ print("Yes")
 ctrlDobot.moveArmXYZ(138, -48, 30)
 print("Position 1")
 
-""" 
+
 for x, y in positions:
     dobot_x = x* 128 /180
     dobot_y = -(y - 180)* 133/180
