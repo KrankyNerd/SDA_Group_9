@@ -59,7 +59,7 @@ ctrlDobot.moveHome()
 time.sleep(2)
 print("YEs")
 
-ctrlDobot.moveArmXYZ(138.4, 67.8, 30)
+ctrlDobot.moveArmXYZ(138, -48, 30)
 print("Position 1")
 
 for x, y in positions:
