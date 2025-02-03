@@ -62,6 +62,7 @@ print("Yes")
 ctrlDobot.moveArmXYZ(138, -48, 30)
 print("Position 1")
 
+""" 
 for x, y in positions:
     dobot_x = x* 128 /180
     dobot_y = -(y - 180)* 133/180
@@ -69,5 +70,8 @@ for x, y in positions:
     print(dobot_y)
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
     time.sleep(2)
+"""
+
+ctrlDobot.moveArmXYZ(128/2, 133/2, 30)
 
 #ctrlDobot.DisconnectDobot()
