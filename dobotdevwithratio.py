@@ -10,8 +10,8 @@ from Camera import Camera
 
 #constants
 homeX, homeY, homeZ = 170, 0, 30
-xpixel_to_cm = 219/16
-ypixel_to_cm = 227/16
+xpixel_to_cm = 16/219
+ypixel_to_cm = 16/227
 cm_to_dobot_x = 128/12.5
 cm_to_dobot_y = -133/12.5
 #conveyorPos = 20, -220, 30
@@ -32,6 +32,7 @@ print("homing finished")
 
 #the base is 220px x 220px
 #and 0.16m x 0.16m
+# 0r 12.5cm x 12.5cm if you consider the center of the products
 
 # arm get out of camera pov
 print("arm go away")
