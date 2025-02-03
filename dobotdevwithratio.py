@@ -72,6 +72,6 @@ for x, y in positions:
     time.sleep(2)
 """
 
-ctrlDobot.moveArmXYZ(128/2, 133/2, 30)
+ctrlDobot.moveArmXYZ(138.2+ 128/2,-47.9+ 133/2, 30)
 
 #ctrlDobot.DisconnectDobot()
