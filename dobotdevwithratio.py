@@ -10,10 +10,10 @@ from Camera import Camera
 
 #constants
 homeX, homeY, homeZ = 170, 0, 30
-xpixel_to_cm = 16/219
-ypixel_to_cm = 16/227
+xpixel_to_cm = 12.5/180
+ypixel_to_cm = 12.5/180
 cm_to_dobot_x = 128/12.5
-cm_to_dobot_y = -133/12.5
+cm_to_dobot_y = 133/12.5
 #conveyorPos = 20, -220, 30
 
 #objects
