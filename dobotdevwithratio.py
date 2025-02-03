@@ -57,8 +57,11 @@ else:
 ctrlDobot.moveArmXYZ(138.4, -63.8, 30)
 
 for x, y in positions:
-    ctrlDobot.moveArmXYZ(x*cm_to_dobot, y*cm_to_dobot, 30)
+    dobot_x = x*cm_to_dobot
+    dobot_y = -y*cm_to_dobot
+    ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
+    print(dobot_x)
+    print(dobot_y)
     time.sleep(2)
 
-
-ctrlDobot.DisconnectDobot()
+#ctrlDobot.DisconnectDobot()
