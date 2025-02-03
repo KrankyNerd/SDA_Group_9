@@ -85,5 +85,5 @@ for x, y in positions:
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
     ctrlDobot.toggleSuction(True)
     time.sleep(2)
-
+time.sleep(5)
 #ctrlDobot.DisconnectDobot()
