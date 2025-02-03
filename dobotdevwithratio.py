@@ -73,5 +73,5 @@ for x, y in positions:
 """
 
 ctrlDobot.moveArmXYZ(138.2+ 128/2,-47.9+ 133/2, 30)
-
+time.sleep(5)
 #ctrlDobot.DisconnectDobot()
