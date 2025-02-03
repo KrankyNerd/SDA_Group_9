@@ -10,10 +10,10 @@ from Camera import Camera
 
 #constants
 homeX, homeY, homeZ = 170, 0, 30
-xpixel_to_cm = 1/17.4 #proportion pixel/size
-ypixel_to_cm = 1/18.16
-cm_to_dobot_x = 10.64
-cm_to_dobot_y = 10.08
+xpixel_to_cm = 16/219
+ypixel_to_cm = 16/227
+cm_to_dobot_x = 128/12.5
+cm_to_dobot_y = 133/12.5
 #conveyorPos = 20, -220, 30
 
 #objects
@@ -47,19 +47,18 @@ time.sleep(2)
 
 detected_shapesdata = myCamera.run() 
 
-# change this to get positions in centimeters (CONVERT)
 if detected_shapesdata:
     for shape in detected_shapesdata:
         positions = [(shape['pixel_posx']*xpixel_to_cm, shape['pixel_posy']*ypixel_to_cm) for shape in detected_shapesdata]
 else:
     print("No shapes detected.")
 
-#for every shape, dobot coordinate =  position (x.y) in cm * 10.528
+
 ctrlDobot.moveHome()
 time.sleep(2)
-print("YEs")
+print("Yes")
 
-ctrlDobot.moveArmXYZ(138.4, 67.8, 30)
+ctrlDobot.moveArmXYZ(138, -48, 30)
 print("Position 1")
 
 for x, y in positions:
