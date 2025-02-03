@@ -63,8 +63,8 @@ ctrlDobot.moveArmXYZ(138, -48, 30)
 print("Position 1")
 
 for x, y in positions:
-    dobot_x = 123.5 + 132 * x /180
-    dobot_y = 81.44 - 130 * y/180
+    dobot_x = x* 128 /180
+    dobot_y = -(y - 180)* 133/180
     print(dobot_x)
     print(dobot_y)
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
