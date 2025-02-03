@@ -1,6 +1,7 @@
 """testing moving the arm and changing coordinates with pixel to meter ratio, not with matrix transformation"""
 
 #import libraries and classes
+import DobotDllType as dType
 import DoBotArm as dbt
 import time
 import numpy as np
@@ -30,7 +31,7 @@ def toggleSuction(self, state, wait=True):
     :param wait: If True, waits for execution
     """
     self.suction = state  # Update suction state variable
-    self.lastIndex = dType.SetEndEffectorSuctionCup(self.api, 1, 1 if state else 0, isQueued=1)[0]
+    self.lastIndex = dbt.dType.SetEndEffectorSuctionCup(self.api, 1, 1 if state else 0, isQueued=1)[0]
     
     if wait:
         self.commandDelay(self.lastIndex)
