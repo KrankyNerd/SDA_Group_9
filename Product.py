@@ -6,7 +6,7 @@ Class for products.
 
 
 class Product:   
-    def __init__ (self, ID, product_type, product_colour, pixel_posx, pixel_posy):#,product_pos):
+    def _init_ (self, ID, product_type, product_colour, pixel_posx, pixel_posy):#,product_pos):
 
         self.ID = ID
         self.product_type = product_type

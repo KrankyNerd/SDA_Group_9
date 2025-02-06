@@ -13,7 +13,7 @@ class Camera:
     MIN_CONTOUR_AREA = 200
     CROP_Y_START, CROP_Y_END, CROP_X_START, CROP_X_END = 169, 394, 213, 432
 
-    def __init__(self, resolution=(640, 480), channels=3, address=0, white_balance=True):
+    def _init_(self, resolution=(640, 480), channels=3, address=0, white_balance=True):
         self.resolution = resolution
         self.channels = channels
         self.address = address
@@ -132,5 +132,4 @@ class Camera:
 
 #TODO: make sure to delete this stuff was just for testing
 # Create an instance of the Camera class and run it
-#if __name__ == "__main__":
-    
+#if _name_ == "_main_":
