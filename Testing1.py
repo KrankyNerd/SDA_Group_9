@@ -21,7 +21,7 @@ cm_to_dobot = 10.528
 #objects
 ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home= False)
 myCamera = Camera(address=1)
-Conveyor = Conveyor(15000)
+Conveyor = Conveyor(False, 15000)
 
 #-----------------------methods-------------------------
 
