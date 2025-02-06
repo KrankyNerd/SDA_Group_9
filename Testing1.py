@@ -59,7 +59,50 @@ ctrlDobot.SetConveyor(enabled=1, speed=-15000)
 time.sleep(3)
 ctrlDobot.SetConveyor(enabled=0)
 
+selected_shape = {"x": None, "y": None}  # Store shape coordinates globally
 
+# Debugging: Make sure OpenCV recognizes clicks
+def handle_mouse_click(event, x, y, flags, param):
+    print("Mouse clicked")  # Debugging
+    if event == cv2.EVENT_LBUTTONDOWN:
+        print(f"Mouse Click at ({x}, {y})")  # Debugging
+        for shape in detected_shapesdata:
+            print(f"Checking shape at ({shape['pixel_posx']}, {shape['pixel_posy']})")  # Debugging
+            if (
+                abs(x - shape["pixel_posx"]) < 10
+                and abs(y - shape["pixel_posy"]) < 10
+            ):
+                print(f"Clicked on {shape['product_type']} at ({x}, {y})!")
+                selected_shape["x"] = shape["pixel_posx"]
+                selected_shape["y"] = shape["pixel_posy"]
+                print("Shape Selected:", selected_shape)  # Debugging
+                break
+
+# Create OpenCV window and set mouse callback
+cv2.namedWindow("Processed Image")
+cv2.setMouseCallback("Processed Image", handle_mouse_click)
+
+while True:
+    frame = myCamera.get_image()
+    if frame is not None:
+        processed_image, detected_shapesdata, _ = myCamera.process_image(frame)
+        cv2.imshow("Processed Image", processed_image)
+
+        # Ensure OpenCV is processing events
+        cv2.waitKey(1)
+
+        # Debugging: Print detected shapes
+        print("Detected Shapes Data:", detected_shapesdata)
+
+        # Check if shape has been selected
+        if selected_shape["x"] is not None and selected_shape["y"] is not None:
+            break  # Exit loop once a shape is selected
+
+dobot_x = 0.71 * selected_shape["x"] + 124
+dobot_y = -0.738 * selected_shape["y"] + 99.76
+print(f"Dobot Coordinates: X={dobot_x}, Y={dobot_y}")
+
+"""
 while True:
     frame = myCamera.get_image()
     if frame is not None:
@@ -150,4 +193,4 @@ for x, y in positions:
 
     time.sleep(2)
 
-#ctrlDobot.DisconnectDobot()
+#ctrlDobot.DisconnectDobot()""""
