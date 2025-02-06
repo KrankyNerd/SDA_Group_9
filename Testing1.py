@@ -8,6 +8,7 @@ import numpy as np
 import cv2
 from serial.tools import list_ports
 from Camera import Camera
+from Conveyor import Conveyor
 import threading
 
 
@@ -20,6 +21,7 @@ cm_to_dobot = 10.528
 #objects
 ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home= False)
 myCamera = Camera(address=1)
+Conveyor = Conveyor(15000)
 
 #-----------------------methods-------------------------
 
