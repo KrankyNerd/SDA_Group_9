@@ -8,7 +8,6 @@ import numpy as np
 import cv2
 from serial.tools import list_ports
 from Camera import Camera
-from Conveyor import Conveyor
 from GUI import GUI
 import threading
 
@@ -22,7 +21,6 @@ cm_to_dobot = 10.528
 # objects
 ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home=False)
 myCamera = Camera(address=1)
-Conveyor = Conveyor(False, 15000)
 myGUI = GUI(resolution=(640, 480), duration=500, product_list=[], product_selection=True)
 
 # -----------------------methods-------------------------
