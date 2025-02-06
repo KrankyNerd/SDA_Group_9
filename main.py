@@ -3,175 +3,111 @@
 # 1import libraries and classes
 import threading
 import DoBotArm as dbt
+import DobotDllType as dType
 import time
-import Conveyor
-import Camera
-import GUI
-import Dobot
 import numpy as np
+from serial.tools import list_ports
 import cv2
-import EndEffector
 from typing import List, Tuple
-
-# from serial.tools import list_ports
-
+from Camera import Camera
+from GUI import GUI
+from types import MethodType # Monkey patch the function to the object
 
 # constants
 homeX, homeY, homeZ = 170, 0, 30
-
+homeX, homeY, homeZ = 170, 0, 30
+pixel_to_cm = 1 / 14.4
+cm_to_dobot = 10.528
 
 # objects
-conveyor = Conveyor(True, 0)
-camera = Camera(address=2)
-end_effector = EndEffector(False)
-myGUI = GUI(
-    0, 5000, [], False
-)  # resolution, timer duration, product list, product selection
-myDobot = dbt.DoBotArm(
-    "COM3", homeX, homeY, homeZ, home=False
-)  # FIX THIS, should be from Dobot.py
+myCamera = Camera(address=1)
+myGUI = GUI(resolution=(640, 480), duration=500, product_list=[], product_selection=True)
+ctrlDobot = dbt.DoBotArm(
+    "COM5", homeX, homeY, homeZ, home=False
+)
 
-#initialization
-print("starting")
+# -----------------------methods-------------------------
 
-myDobot.moveHome()  # README: this assumes the arm is initialized in DOBOTLAB with home position (170, 0, 30)
-
-
-# 4 Camera setup and  Camera image detection
-camera.run()
-
-# 5a GUI display
-myGUI.display_products()
-# 5b User input handling
-# 6 Moving product
-
-# 6a obtain product position and move to it
-
-# 6b pick product :lower arm, toggle end effector, raise arm
-myDobot.moveArmRelXYZ(0, 0, 40)
-myDobot.moveArmXYZ(x=170, y=0, z=-7)
-myDobot.toggleSuction()
-time.sleep(5)
-# 6 c move to conveyor position, lower arm, toggle end effector, raise arm
-myDobot.moveArmRelXYZ(0, 0, 40)
-time.sleep(5)
-myDobot.toggleSuction()
-
-# 6d home dobot, move conveyor, stop conveyor
-##conveyor.move_conveyor(True, 15000)#start conveyor
-time.sleep(5)  # delay
-# conveyor.move_conveyor(True, 0)#stops conveyor
-camera.release()
-
-# ctrlDobot.SetConveyor(True, 15000)#start conveyor
-# time.sleep(5)#delay
-# ctrlDobot.SetConveyor(True, 0)#stops conveyor
-# #def SetConveyor(self, enabled, speed = 15000):
-
-
-def get_sample_points(
-    camera: Camera, dobot: Dobot
-) -> Tuple[List[np.ndarray], List[np.ndarray]]:
+def toggleSuction(self, state, wait=True):
     """
-    Obtains a bunch of point samples expressed in both the given cameras' and dobots' frames of reference.
+    Toggles the suction cup ON/OFF.
+    :param state: True to turn suction ON, False to turn it OFF
+    :param wait: If True, waits for execution
     """
+    self.suction = state  # Update suction state variable
+    self.lastIndex = dbt.dType.SetEndEffectorSuctionCup(
+        self.api, 1, 1 if state else 0, isQueued=1
+    )[0]
 
-    # README: this implementation currently is based on moving to a couple hardcoded points that *must always* be in the cameras' FOV. There are better options which require more time of implementation, such as having a human move the dobot arm with the keyboard and recording a bunch of points, or a "smart" program that can move the dobot in intervals until it exits the FOV
+    if wait:
+        self.commandDelay(self.lastIndex)
+    return self.lastIndex
 
-    # we need a minimum of 4 points to create a homography matrix
-    # The more points and the more variation the better
-    hardcoded_dobot_poses = [180
-        (170, -25, 20),
-        (145, -20, 20),
-        (160, 10, 20),
-        (150, 0, 20),
-    ] 
+# --------------- end of methods -------------------------
 
-    camera_coordinates_list = []
-    dobots_coordinates_list = []
 
-    for pose in hardcoded_dobot_poses:
-        x, y, z = pose  # Unpack the x, y, z coordinates from the current pose
-        dobot.moveArmXYZ(x, y, z)  # move arm
-        camera_coordinates = dobot.getPosition() #get camera coordinates
-        camera.run() # process image
-        dobot_coordinates = camera.run() #TODO change to find_white_square() or whatever
 
-        camera_coordinates_list.append(camera_coordinates)
-        dobots_coordinates_list.append(dobot_coordinates)
+#-------------------initialization-------------------
+print("starting!")
+ctrlDobot.toggleSuction = MethodType(toggleSuction, ctrlDobot)
+# ------------------------------------------------
 
-        coordinates_data: Tuple[np.ndarray, np.ndarray] = (
-            np.array(camera_coordinates_list),
-            np.array(dobots_coordinates_list),
-        )
+#-------------------main flow---------------
+
+ctrlDobot.moveHome()  # README: this assumes the arm is initialized in DOBOTLAB with home position (170, 0, 30)
+ctrlDobot.moveArmXYZ(None, -200, 30) #arm gets out of camera fov
+time.sleep(1)
+myCamera.run()
+
+while True:
+    frame = myCamera.get_image()
+    if frame is not None:
+        processed_image, detected_shapesdata, _ = myCamera.process_image(frame)
+
+        # Display the processed image
+        cv2.imshow("Processed Image", processed_image)
+        # Instantiate and display detected products
+        myGUI.instantiate_product(detected_shapesdata)
+
+        # myGUI.display_products()
+        # Mouse interaction for shape clicks
+        selected_shape = {"x": None, "y": None}  # Store shape coordinates globally
+
+        def handle_mouse_click(event, x, y, flags, param):
+            if event == cv2.EVENT_LBUTTONDOWN:
+                for shape in detected_shapesdata:
+                    if (
+                        abs(x - shape["pixel_posx"]) < 10
+                        and abs(y - shape["pixel_posy"]) < 10
+                    ):
+                        print(f"Clicked on {shape['product_type']} at ({x}, {y})!")
+ 
+                        # Store values in dictionary
+                        selected_shape["x"] = shape["pixel_posx"]
+                        selected_shape["y"] = shape["pixel_posy"]
+                        break  # Stop loop after first match
+
+        cv2.setMouseCallback("Processed Image", handle_mouse_click)
+    
+        dobot_x = 0.71 * selected_shape["x"] + 124
+        dobot_y = -0.738 * selected_shape["y"] + 99.76
+   
+        ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
+        ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -34.0)
+        time.sleep(2)
+        ctrlDobot.toggleSuction(True)
+        ctrlDobot.moveArmXYZ(None, None, 30)
+        ctrlDobot.moveHome()
+        ctrlDobot.moveArmXYZ(None, -220, 30)
+        ctrlDobot.moveArmXYZ(100, -220, 30)
+        time.sleep(2)
+        ctrlDobot.toggleSuction(False)
         
-    return coordinates_data
+        ctrlDobot.moveArmXYZ(170, -220, 30)
+        ctrlDobot.moveArmXYZ(None, -220, 30)
+        ctrlDobot.moveHome()
 
-
-
-def get_homography_matrix(sample_points) -> np.ndarray:  # to call once in init
-    """
-    Returns a transformation matrix from camera coordinates to arm coordinates. This can be used to then transform between frames of reference.
-
-    Returns:
-        np.ndarray: homography matrix
-    """
-
-    camera_points = sample_points[0]
-    dobot_points = sample_points[1]
-
-    # tests
-    assert len(camera_points) == len(
-        dobot_points
-    ), "different amount of camera and dobot point samples"
-    assert (
-        len(camera_points) >= 4
-    ), f"Too little sample points ({len(camera_points)} to calculate a homography matrix, 4 or more are needed)"
-    assert len(camera_points) == len(
-        {tuple(pt) for pt in camera_points}
-    ), "Camera points are not unique"
-    assert len(dobot_points) == len(
-        {tuple(pt) for pt in dobot_points}
-    ), "Dobot points are not unique"
-
-    # add artificial 3rd coordinates for the math to math
-    camera_points = [
-        np.array([point[0], point[1], 1.0]).reshape(3, 1) for point in camera_points
-    ]
-    dobot_points = [
-        np.array([point[0], point[1], 1.0]).reshape(3, 1) for point in dobot_points
-    ]
-
-    # compute the matrix
-    homography_matrix, _ = cv2.findHomography(camera_points, dobot_points)
-
-    return homography_matrix
-
-
-def convert_camera2dobot_coordinates(
-    homography_matrix, camera_point
-) -> Tuple[int, int]:
-
-    assert (
-        len(camera_point) == 2
-    ), f"Expected 2 values for the camera point, got {len(camera_point)} instead"
-
-    # add artificially z coordinate for matrix multiplication to work
-    camera_point = np.array([camera_point[0], camera_point[1], 1.0])
-    # maybe you need to reshape to a column vector, instead of a row vector
-    # camera_point = camera_point.reshape(3,1)
-    dobot_point = np.dot(homography_matrix, camera_point)
-    dobot_point /= dobot_point[2]  # Normalize, not sure why
-
-    return dobot_point
-
-
-
-#1. [x] Get white square (dobot) coordinates
-#2. [x] Implement the rest of get_sample_points()
-  #  2.1 [x] manage to move the dobot
-   # 2.2 [x] manage to get the dobot current coordinates
-#3. [x] Find good hardcoded_points for the dobot to collect samples
-#4. [x] Run get_sample_points() and make sure the output makes sense, it a pair (tuple) of lists of points, the first from the camera and the second from the dobot
-#5. [x] Pass the collected points to get_homography_matrix() and verify it returns a 3x3 numpy matrix with floating values inside
-#6. [10% done ] Now try using all this to make the robot go to a desired point in the camera, if it is simpler then just try making it go to a shape (instead of creating another way of selecting a point)
+    # Break the loop on 'q' key press
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        myCamera.release()
+        break

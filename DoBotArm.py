@@ -6,7 +6,6 @@ sys.path.insert(1,'./DLL')
 import DobotDllType as dType
 import time
 
-
 """-------The DoBot Control Class-------
 Variables:
 suction = Suction is currently on/off
