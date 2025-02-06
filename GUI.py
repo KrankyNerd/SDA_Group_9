@@ -73,7 +73,7 @@ class GUI:
 
 if __name__ == "__main__":
     myGUI = GUI(resolution=(640, 480), duration=500, product_list=[], product_selection=True)
-    camera = Camera()
+    camera = Camera(address=1)
 
     try:
         while True:
