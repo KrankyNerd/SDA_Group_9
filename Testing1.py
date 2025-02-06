@@ -60,8 +60,6 @@ time.sleep(3)
 ctrlDobot.SetConveyor(enabled=0)
 
 
-
-"""
 while True:
     frame = myCamera.get_image()
     if frame is not None:
@@ -76,6 +74,7 @@ while True:
         # Mouse interaction for shape clicks
         def handle_mouse_click(event, x, y, flags, param):
             if event == cv2.EVENT_LBUTTONDOWN:
+                print("Mouse clicked")
                 for shape in detected_shapesdata:
                     if (
                         abs(x - shape["pixel_posx"]) < 10
@@ -151,4 +150,4 @@ for x, y in positions:
 
     time.sleep(2)
 
-#ctrlDobot.DisconnectDobot()"""
+#ctrlDobot.DisconnectDobot()
