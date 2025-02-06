@@ -81,19 +81,23 @@ for x, y in positions:
     dobot_x = 0.71 * x + 124
     dobot_y = -0.738 * y + 99.76
     ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
-    ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -33.5)
+    ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -34.0)
+    #ctrlDobot.toggleSuction()
+    #ctrlDobot.pickToggle(-31.5, True)
     time.sleep(2)
-
-    # grab product
     ctrlDobot.toggleSuction(True)
-    # move to conveyor - find which coordinates
-    ctrlDobot.moveArmXYZ(200, 45, 30)
-    #wait a bit
+    ctrlDobot.moveArmXYZ(None, None, 30)
+    ctrlDobot.moveHome()
+    ctrlDobot.moveArmXYZ(None, -220, 30)
+    ctrlDobot.moveArmXYZ(100, -220, 30)
     time.sleep(2)
-    # drop product (maybe move arm lower before?)
     ctrlDobot.toggleSuction(False)
+    ctrlDobot.moveArmXYZ(170, -220, 30)
+    ctrlDobot.moveArmXYZ(None, -220, 30)
+    ctrlDobot.moveHome()
 
-    #move back home
+    print(dobot_x)
+    print(dobot_y)
     time.sleep(2)
 
 #ctrlDobot.DisconnectDobot()
