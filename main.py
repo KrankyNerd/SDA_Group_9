@@ -95,8 +95,9 @@ while True:
             dobot_y = -0.738 * selected_shape["y"] + 99.76
             
             print("go pick it up!")
+            ctrlDobot.moveHome()
             ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
-            ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -34.0)
+            ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -34.5)
             time.sleep(2)
             ctrlDobot.toggleSuction(True)
             ctrlDobot.moveArmXYZ(None, None, 30)
@@ -105,10 +106,12 @@ while True:
             ctrlDobot.moveArmXYZ(100, -220, 30)
             time.sleep(2)
             ctrlDobot.toggleSuction(False)
-
+            ctrlDobot.SetConveyor(enabled=1, speed=-7000)
             ctrlDobot.moveArmXYZ(170, -220, 30)
             ctrlDobot.moveArmXYZ(None, -220, 30)
-            ctrlDobot.moveHome()
+            time.sleep(1)
+            ctrlDobot.SetConveyor(enabled=0, speed=0)
+           
 
             # Reset selected shape after action is completed
             selected_shape["x"] = None
