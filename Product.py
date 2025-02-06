@@ -11,7 +11,7 @@ class Product:
         self.ID = ID
         self.product_type = product_type
         self.product_colour = product_colour
-        self.product_posx = pixel_posx
+        self.pixel_posx = pixel_posx
         self.pixel_posy = pixel_posy
        # self.product_pos = product_pos
 
