@@ -53,6 +53,13 @@ ctrlDobot.toggleSuction = MethodType(toggleSuction, ctrlDobot)
 
 # ------------------- MAIN   START -------------------------
 
+ctrlDobot.SetConveyor(True)
+time.sleep(2)
+ctrlDobot.SetConveyor(False)
+
+
+
+"""
 while True:
     frame = myCamera.get_image()
     if frame is not None:
@@ -85,7 +92,7 @@ while True:
     myCamera.release()
 
 
-"""
+
 ctrlDobot.moveHome()
 time.sleep(1)
 print("homing finished")
