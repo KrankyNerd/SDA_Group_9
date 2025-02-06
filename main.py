@@ -16,8 +16,7 @@ from types import MethodType # Monkey patch the function to the object
 # constants 
 homeX, homeY, homeZ = 170, 0, 30
 homeX, homeY, homeZ = 170, 0, 30
-pixel_to_cm = 1 / 14.4
-cm_to_dobot = 10.528
+
 
 #global variables
 selected_shape = {"x": None, "y": None}  # Store shape coordinates globally
