@@ -64,12 +64,12 @@ while True:
     frame = myCamera.get_image()
     if frame is not None:
         processed_image, detected_shapesdata, _ = myCamera.process_image(frame)
-        
+
         # Display the processed image
         cv2.imshow("Processed Image", processed_image)
         # Instantiate and display detected products
         myGUI.instantiate_product(detected_shapesdata)
-        # cv2.waitKey(1) try later
+        cv2.waitKey(1) 
         # myGUI.display_products()
         # Mouse interaction for shape clicks
         def handle_mouse_click(event, x, y, flags, param):
