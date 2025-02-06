@@ -78,11 +78,13 @@ while True:
                         selected_shape = [shape["pixel_posx"], shape["pixel_posy"]]
                         print(selected_shape)
                         break
-                cv2.setMouseCallback("Processed Image", handle_mouse_click)
+        cv2.setMouseCallback("Processed Image", handle_mouse_click)
 
-            # Break the loop on 'q' key press
-            if cv2.waitKey(1) & 0xFF == ord("q"):
-                break
+    # Break the loop on 'q' key press
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
+
+    myCamera.release()
 
 
 """
