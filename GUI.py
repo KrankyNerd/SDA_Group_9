@@ -9,7 +9,7 @@ from Camera import Camera
 import cv2
 
 class GUI:
-    def __init__(self, resolution, duration, product_list, product_selection):
+    def _init_(self, resolution, duration, product_list, product_selection):
         self.resolution = resolution
         self.duration = duration
         self.product_list = product_list
@@ -45,8 +45,6 @@ class GUI:
         
         :param detected_shapesdata: List of dictionaries containing shape data.
         """
-        #Clear productlist at the end of each cycle
-        self.product_list =[]
         product_counter = len(self.product_list)  # Continue ID from current list size
         for product_dict in detected_shapesdata:
             product = Product(
@@ -71,7 +69,7 @@ class GUI:
             print(f"Product {product.ID}: {product.product_type}, Color: {product.product_colour}, "
                   f"Position: ({product.pixel_posx}, {product.pixel_posy})")
 
-if __name__ == "__main__":
+if _name_ == "_main_":
     myGUI = GUI(resolution=(640, 480), duration=500, product_list=[], product_selection=True)
     camera = Camera(address=1)
 
@@ -79,17 +77,12 @@ if __name__ == "__main__":
         while True:
             frame = camera.get_image()
             if frame is not None:
-               # processed_image,
-                _, detected_shapesdata, _ = camera.process_image(frame)
+                processed_image, detected_shapesdata = camera.process_image(frame)
 
                 # Display the processed image
-                cv2.imshow("Processed Image", frame) #processed_image)
+                cv2.imshow("Processed Image", processed_image)
 # Instantiate and display detected products
-                if detected_shapesdata and isinstance(detected_shapesdata, list):
-                    myGUI.instantiate_product(detected_shapesdata)
-               # else:
-                    #print("No valid shape data detected.")
-                
+                myGUI.instantiate_product(detected_shapesdata)
                 #myGUI.display_products()
                 # Mouse interaction for shape clicks
                 def handle_mouse_click(event, x, y, flags, param):
@@ -103,7 +96,6 @@ if __name__ == "__main__":
                                 break
 
                 cv2.setMouseCallback("Processed Image", handle_mouse_click)
-                
 
             # Break the loop on 'q' key press
             if cv2.waitKey(1) & 0xFF == ord('q'):
