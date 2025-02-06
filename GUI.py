@@ -87,8 +87,8 @@ if __name__ == "__main__":
 # Instantiate and display detected products
                 if detected_shapesdata and isinstance(detected_shapesdata, list):
                     myGUI.instantiate_product(detected_shapesdata)
-                else:
-                    print("No valid shape data detected.")
+               # else:
+                    #print("No valid shape data detected.")
                 
                 #myGUI.display_products()
                 # Mouse interaction for shape clicks
