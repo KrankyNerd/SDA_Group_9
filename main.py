@@ -68,13 +68,13 @@ while True:
         cv2.imshow("Processed Image", processed_image)
         # Instantiate and display detected products
         myGUI.instantiate_product(detected_shapesdata)
+        cv2.waitKey(1) 
 
-        # myGUI.display_products()
-        # Mouse interaction for shape clicks
         selected_shape = {"x": None, "y": None}  # Store shape coordinates globally
 
         def handle_mouse_click(event, x, y, flags, param):
             if event == cv2.EVENT_LBUTTONDOWN:
+                print("Mouse clicked")
                 for shape in detected_shapesdata:
                     if (
                         abs(x - shape["pixel_posx"]) < 10
