@@ -96,8 +96,12 @@ for x, y in positions:
     ctrlDobot.moveArmXYZ(None, -220, 30)
     ctrlDobot.moveHome()
 
-    print(dobot_x)
-    print(dobot_y)
+    print("camera coordinates:")
+    print(x, y)
+    
+    print("dobot coordinates:")
+    print(dobot_x, dobot_y)
+
     time.sleep(2)
 
 #ctrlDobot.DisconnectDobot()
