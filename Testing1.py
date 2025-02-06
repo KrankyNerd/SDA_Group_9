@@ -9,6 +9,7 @@ import cv2
 from serial.tools import list_ports
 from Camera import Camera
 from Conveyor import Conveyor
+from GUI import GUI
 import threading
 
 
@@ -22,6 +23,7 @@ cm_to_dobot = 10.528
 ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home= False)
 myCamera = Camera(address=1)
 Conveyor = Conveyor(False, 15000)
+myGUI= GUI(10,500,[],True)
 
 #-----------------------methods-------------------------
 
@@ -48,6 +50,20 @@ ctrlDobot.toggleSuction = MethodType(toggleSuction, ctrlDobot)
 
 # ------------------- MAIN   START -------------------------
 
+while True: #not good, infinite loop     
+        frame=myCamera.get_image()
+        if frame is not None:
+            processed_image, detected_shapesdata = myCamera.process_image(frame)#detected_shapesdata =camera.process_image(frame)[1]
+            print (detected_shapesdata)
+            myGUI.instantiate_product(detected_shapesdata)
+            myGUI.display_products()
+            cv2.imshow("Processed Image", processed_image)
+        if cv2.waitKey(1) & 0xFF == ord('q'):
+                break
+    
+    
+
+"""
 ctrlDobot.moveHome()
 time.sleep(1)
 print("homing finished")
@@ -105,4 +121,4 @@ for x, y in positions:
 
     time.sleep(2)
 
-#ctrlDobot.DisconnectDobot()
+#ctrlDobot.DisconnectDobot()"""
