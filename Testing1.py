@@ -1,6 +1,6 @@
 """testing moving the arm and changing coordinates with pixel to meter ratio, not with matrix transformation"""
 
-#import libraries and classes
+# import libraries and classes
 import DobotDllType as dType
 import DoBotArm as dbt
 import time
@@ -13,19 +13,20 @@ from GUI import GUI
 import threading
 
 
-#constants
+# constants
 homeX, homeY, homeZ = 170, 0, 30
-pixel_to_cm = 1/14.4
+pixel_to_cm = 1 / 14.4
 cm_to_dobot = 10.528
-#conveyorPos = 20, -220, 30
+# conveyorPos = 20, -220, 30
 
-#objects
-ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home= False)
+# objects
+ctrlDobot = dbt.DoBotArm("COM5", homeX, homeY, homeZ, home=False)
 myCamera = Camera(address=1)
 Conveyor = Conveyor(False, 15000)
-myGUI= GUI(10,500,[],True)
+myGUI = GUI(resolution=(640, 480), duration=500, product_list=[], product_selection=True)
 
-#-----------------------methods-------------------------
+# -----------------------methods-------------------------
+
 
 # Define the function outside the class
 def toggleSuction(self, state, wait=True):
@@ -35,33 +36,54 @@ def toggleSuction(self, state, wait=True):
     :param wait: If True, waits for execution
     """
     self.suction = state  # Update suction state variable
-    self.lastIndex = dbt.dType.SetEndEffectorSuctionCup(self.api, 1, 1 if state else 0, isQueued=1)[0]
-    
+    self.lastIndex = dbt.dType.SetEndEffectorSuctionCup(
+        self.api, 1, 1 if state else 0, isQueued=1
+    )[0]
+
     if wait:
         self.commandDelay(self.lastIndex)
     return self.lastIndex
 
+
 # Monkey patch the function to the object
 from types import MethodType
+
 ctrlDobot.toggleSuction = MethodType(toggleSuction, ctrlDobot)
 
-#--------------- end of methods -------------------------
+# --------------- end of methods -------------------------
 
 
 # ------------------- MAIN   START -------------------------
 
-while True: #not good, infinite loop     
-        frame=myCamera.get_image()
-        if frame is not None:
-            processed_image, detected_shapesdata = myCamera.process_image(frame)#detected_shapesdata =camera.process_image(frame)[1]
-            print (detected_shapesdata)
-            myGUI.instantiate_product(detected_shapesdata)
-            myGUI.display_products()
-            cv2.imshow("Processed Image", processed_image)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
+while True:
+    frame = myCamera.get_image()
+    if frame is not None:
+        processed_image, detected_shapesdata = myCamera.process_image(frame)
+
+        # Display the processed image
+        cv2.imshow("Processed Image", processed_image)
+        # Instantiate and display detected products
+        myGUI.instantiate_product(detected_shapesdata)
+
+        # myGUI.display_products()
+        # Mouse interaction for shape clicks
+        def handle_mouse_click(event, x, y, flags, param):
+            if event == cv2.EVENT_LBUTTONDOWN:
+                for shape in detected_shapesdata:
+                    if (
+                        abs(x - shape["pixel_posx"]) < 10
+                        and abs(y - shape["pixel_posy"]) < 10
+                    ):
+                        print(f"Clicked on {shape['product_type']} at ({x}, {y})!")
+                        selected_shape = [shape["pixel_posx"], shape["pixel_posy"]]
+                        print(selected_shape)
+                        break
+                cv2.setMouseCallback("Processed Image", handle_mouse_click)
+
+            # Break the loop on 'q' key press
+            if cv2.waitKey(1) & 0xFF == ord("q"):
                 break
-    
-    
+
 
 """
 ctrlDobot.moveHome()
