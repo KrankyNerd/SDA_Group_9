@@ -17,6 +17,9 @@ from types import MethodType # Monkey patch the function to the object
 homeX, homeY, homeZ = 170, 0, 30
 homeX, homeY, homeZ = 170, 0, 30
 
+# global variables
+selected_shape = {"x": None, "y": None}  
+
 # objects
 myCamera = Camera(address=1)
 myGUI = GUI(resolution=(640, 480), duration=500, product_list=[], product_selection=True)
@@ -41,6 +44,20 @@ def toggleSuction(self, state, wait=True):
         self.commandDelay(self.lastIndex)
     return self.lastIndex
 
+
+def handle_mouse_click(event, x, y, flags, param):
+    if event == cv2.EVENT_LBUTTONDOWN:
+        print("Mouse clicked")  # Debugging
+        for shape in detected_shapesdata:
+            if (
+                abs(x - shape["pixel_posx"]) < 10
+                and abs(y - shape["pixel_posy"]) < 10
+            ):
+                print(f"Clicked on {shape['product_type']} at ({x}, {y})!")
+                selected_shape["x"] = shape["pixel_posx"]
+                selected_shape["y"] = shape["pixel_posy"]
+                print("Selected Shape:", selected_shape)  # Debugging
+                break  # Stop after first match
 # --------------- end of methods -------------------------
 
 
@@ -56,6 +73,9 @@ ctrlDobot.moveHome()  # README: this assumes the arm is initialized in DOBOTLAB 
 ctrlDobot.moveArmXYZ(None, -200, 30) #arm gets out of camera fov
 time.sleep(1)
 myCamera.run()
+
+# Set mouse callback **once** outside the loop
+cv2.setMouseCallback("Processed Image", handle_mouse_click)
 
 while True:
     frame = myCamera.get_image()
@@ -83,28 +103,27 @@ while True:
                         # Store values in dictionary
                         selected_shape["x"] = shape["pixel_posx"]
                         selected_shape["y"] = shape["pixel_posy"]
-                        break  # Stop loop after first match
-
-        cv2.setMouseCallback("Processed Image", handle_mouse_click)
-    
-        dobot_x = 0.71 * selected_shape["x"] + 124
-        dobot_y = -0.738 * selected_shape["y"] + 99.76
-   
-        ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
-        ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -34.0)
-        time.sleep(2)
-        ctrlDobot.toggleSuction(True)
-        ctrlDobot.moveArmXYZ(None, None, 30)
-        ctrlDobot.moveHome()
-        ctrlDobot.moveArmXYZ(None, -220, 30)
-        ctrlDobot.moveArmXYZ(100, -220, 30)
-        time.sleep(2)
-        ctrlDobot.toggleSuction(False)
-        
-        ctrlDobot.moveArmXYZ(170, -220, 30)
-        ctrlDobot.moveArmXYZ(None, -220, 30)
-        ctrlDobot.moveHome()
-
+                    
+                        dobot_x = 0.71 * selected_shape["x"] + 124
+                        dobot_y = -0.738 * selected_shape["y"] + 99.76
+                
+                        ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
+                        ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -34.0)
+                        time.sleep(2)
+                        ctrlDobot.toggleSuction(True)
+                        ctrlDobot.moveArmXYZ(None, None, 30)
+                        ctrlDobot.moveHome()
+                        ctrlDobot.moveArmXYZ(None, -220, 30)
+                        ctrlDobot.moveArmXYZ(100, -220, 30)
+                        time.sleep(2)
+                        ctrlDobot.toggleSuction(False)
+                        
+                        ctrlDobot.moveArmXYZ(170, -220, 30)
+                        ctrlDobot.moveArmXYZ(None, -220, 30)
+                        ctrlDobot.moveHome()
+                        # Reset selected shape after action is completed
+                        selected_shape["x"] = None
+                        selected_shape["y"] = None
     # Break the loop on 'q' key press
     if cv2.waitKey(1) & 0xFF == ord("q"):
         myCamera.release()
