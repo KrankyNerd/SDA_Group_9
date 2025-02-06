@@ -9,7 +9,7 @@ from Camera import Camera
 import cv2
 
 class GUI:
-    def _init_(self, resolution, duration, product_list, product_selection):
+    def __init__(self, resolution, duration, product_list, product_selection):
         self.resolution = resolution
         self.duration = duration
         self.product_list = product_list

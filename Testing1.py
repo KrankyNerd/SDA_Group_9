@@ -8,7 +8,7 @@ import numpy as np
 import cv2
 from serial.tools import list_ports
 from Camera import Camera
-from GUI import GUI
+from GUI import *
 import threading
 
 
@@ -63,7 +63,7 @@ ctrlDobot.SetConveyor(False)
 while True:
     frame = myCamera.get_image()
     if frame is not None:
-        processed_image, detected_shapesdata = myCamera.process_image(frame)
+        processed_image, detected_shapesdata, _ = myCamera.process_image(frame)
 
         # Display the processed image
         cv2.imshow("Processed Image", processed_image)
@@ -87,9 +87,8 @@ while True:
 
     # Break the loop on 'q' key press
     if cv2.waitKey(1) & 0xFF == ord("q"):
+        myCamera.release()
         break
-
-    myCamera.release()
 
 
 
