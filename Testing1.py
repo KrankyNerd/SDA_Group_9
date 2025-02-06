@@ -53,11 +53,11 @@ ctrlDobot.toggleSuction = MethodType(toggleSuction, ctrlDobot)
 
 # ------------------- MAIN   START -------------------------
 
-ctrlDobot.SetConveyor( 15000)
+ctrlDobot.SetConveyor(enabled=1, speed= 15000)
 time.sleep(3)
-ctrlDobot.SetConveyor( -15000)
+ctrlDobot.SetConveyor(enabled=1, speed=-15000)
 time.sleep(3)
-ctrlDobot.SetConveyor(0)
+ctrlDobot.SetConveyor(enabled=0)
 
 
 
