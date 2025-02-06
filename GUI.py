@@ -85,7 +85,11 @@ if __name__ == "__main__":
                 # Display the processed image
                 cv2.imshow("Processed Image", frame) #processed_image)
 # Instantiate and display detected products
-                myGUI.instantiate_product(detected_shapesdata)
+                if detected_shapesdata and isinstance(detected_shapesdata, list):
+                    myGUI.instantiate_product(detected_shapesdata)
+                else:
+                    print("No valid shape data detected.")
+                
                 #myGUI.display_products()
                 # Mouse interaction for shape clicks
                 def handle_mouse_click(event, x, y, flags, param):
