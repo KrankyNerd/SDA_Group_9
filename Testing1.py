@@ -92,6 +92,7 @@ for x, y in positions:
     ctrlDobot.moveArmXYZ(100, -220, 30)
     time.sleep(2)
     ctrlDobot.toggleSuction(False)
+    
     ctrlDobot.moveArmXYZ(170, -220, 30)
     ctrlDobot.moveArmXYZ(None, -220, 30)
     ctrlDobot.moveHome()
