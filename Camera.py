@@ -11,7 +11,7 @@ class Camera:
     THRESHOLD_VALUE = 102
     MAX_THRESHOLD_VALUE = 150
     MIN_CONTOUR_AREA = 200
-    CROP_Y_START, CROP_Y_END, CROP_X_START, CROP_X_END = 157, 372, 152, 368
+    CROP_Y_START, CROP_Y_END, CROP_X_START, CROP_X_END = 169, 394, 213, 432
 
     def __init__(self, resolution=(640, 480), channels=3, address=0, white_balance=True):
         self.resolution = resolution
