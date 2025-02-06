@@ -80,7 +80,7 @@ if __name__ == "__main__":
             frame = camera.get_image()
             if frame is not None:
                # processed_image,
-                detected_shapesdata = camera.process_image(frame)
+                _, detected_shapesdata, _ = camera.process_image(frame)
 
                 # Display the processed image
                 cv2.imshow("Processed Image", frame) #processed_image)
