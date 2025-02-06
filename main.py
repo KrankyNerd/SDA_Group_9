@@ -107,6 +107,7 @@ while True:
                         dobot_x = 0.71 * selected_shape["x"] + 124
                         dobot_y = -0.738 * selected_shape["y"] + 99.76
                 
+                        print("go pick it up!")
                         ctrlDobot.moveArmXYZ(dobot_x, dobot_y, 30)
                         ctrlDobot.moveArmXYZ(dobot_x, dobot_y, -34.0)
                         time.sleep(2)
